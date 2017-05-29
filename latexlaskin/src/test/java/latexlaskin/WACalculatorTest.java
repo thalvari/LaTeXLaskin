@@ -53,7 +53,7 @@ public class WACalculatorTest {
         calc.getEngine().setAppID(APPID + "1");
         String input = "1+1";
         calc.query(input);
-        assertEquals(calc.getError(), "Osoite virheellinen.");
+        assertEquals(calc.getError(), "AppID virheellinen.");
     }
 
     @Test
@@ -138,6 +138,6 @@ public class WACalculatorTest {
         assertTrue(tulos.contains("Ratkaisu WA:n sivuilla:"));
         assertTrue(tulos.contains(query.toWebsiteURL()));
         assertTrue(tulos.contains("Ratkaisu XML-tiedostona:"));
-        assertTrue(tulos.contains(calc.getEngine().toURL(query) + "\n"));
+        assertTrue(tulos.contains(calc.getEngine().toURL(query)));
     }
 }

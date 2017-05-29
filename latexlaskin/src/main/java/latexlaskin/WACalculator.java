@@ -66,7 +66,7 @@ public class WACalculator {
 
     private List<String> processResults(WAQueryResult queryResult) {
         if (queryResult.isError()) {
-            error = "Osoite virheellinen.";
+            error = "AppID virheellinen.";
             return null;
         }
         if (!queryResult.isSuccess()) {
@@ -130,6 +130,6 @@ public class WACalculator {
         System.out.println("Ratkaisu WA:n sivuilla:");
         System.out.println(query.toWebsiteURL());
         System.out.println("Ratkaisu XML-tiedostona:");
-        System.out.println(engine.toURL(query) + "\n");
+        System.out.println(engine.toURL(query));
     }
 }

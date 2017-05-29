@@ -65,14 +65,14 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>          <em class="jxr_comment">// be inherited by all WAQuery objects created from it. Most applications</em>
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>          <em class="jxr_comment">// will only need to crete one WAEngine object, which is used throughout</em>
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>          <em class="jxr_comment">// the life of the application.</em>
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>          <a href="../com/wolfram/alpha/WAEngine.html">WAEngine</a> engine = <strong class="jxr_keyword">new</strong> <a href="../com/wolfram/alpha/WAEngine.html">WAEngine</a>();
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          WAEngine engine = <strong class="jxr_keyword">new</strong> WAEngine();
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          <em class="jxr_comment">// These properties will be set in all the WAQuery objects created from this WAEngine.</em>
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>          engine.setAppID(appid);
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>          engine.addFormat(<span class="jxr_string">"plaintext"</span>);
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>          <em class="jxr_comment">// Create the query.</em>
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>          <a href="../com/wolfram/alpha/WAQuery.html">WAQuery</a> query = engine.createQuery();
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          WAQuery query = engine.createQuery();
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>          <em class="jxr_comment">// Set properties of the query.</em>
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>          query.setInput(input);
@@ -85,7 +85,7 @@
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>  
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>              <em class="jxr_comment">// This sends the URL to the Wolfram|Alpha server, gets the XML result</em>
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>              <em class="jxr_comment">// and parses it into an object hierarchy held by the WAQueryResult object.</em>
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>              <a href="../com/wolfram/alpha/WAQueryResult.html">WAQueryResult</a> queryResult = engine.performQuery(query);
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>              WAQueryResult queryResult = engine.performQuery(query);
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>  
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>              <strong class="jxr_keyword">if</strong> (queryResult.isError()) {
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>                  System.out.println(<span class="jxr_string">"Query error"</span>);

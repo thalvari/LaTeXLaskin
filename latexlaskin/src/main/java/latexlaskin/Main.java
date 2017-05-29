@@ -20,7 +20,7 @@ public class Main {
     private static final String MODE = "plaintext";
     private static final boolean DEBUG = true;
 
-    private static final String INPUT = "\\int_0^1 2x";
+    private static final String INPUT = "2 \\pi / 4";
 
     /**
      * Ohjelman suoritus alkaa pääluokan main-metodista.
@@ -30,13 +30,28 @@ public class Main {
     public static void main(String[] args) {
         Logger.getLogger("com.wolfram.alpha.net.URLFetcher")
                 .setLevel(Level.OFF);
-
         WACalculator calc = new WACalculator(APPID, MODE, DEBUG);
-        List<String> results = calc.query(INPUT);
+        String input = INPUT;
+        switch (args.length) {
+            case 0:
+                break;
+            case 1:
+                input = args[0];
+                break;
+            default:
+                System.out.println("Anna parametrina korkeintaan yksi"
+                        + " merkkijono.");
+                return;
+        }
+        List<String> results = calc.query(input);
         if (calc.getError() != null) {
             System.out.println(calc.getError());
         } else {
-            System.out.println("Tulostetaan vaihtoehtoiset ratkaisut:");
+            if (results.size() == 1) {
+                System.out.println("Ratkaisu:");
+            } else {
+                System.out.println("Vaihtoehtoiset ratkaisut:");
+            }
             for (String result : results) {
                 System.out.println(result);
             }
