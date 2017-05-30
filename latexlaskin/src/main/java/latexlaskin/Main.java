@@ -20,7 +20,7 @@ public class Main {
     private static final String MODE = "plaintext";
     private static final boolean DEBUG = true;
 
-    private static final String INPUT = "2 \\pi / 4";
+    private static final String INPUT = "\\sum_{i=0}^{\\infty} 1/i!";
 
     /**
      * Ohjelman suoritus alkaa pääluokan main-metodista.

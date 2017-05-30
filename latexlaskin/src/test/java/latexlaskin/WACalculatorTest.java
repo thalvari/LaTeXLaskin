@@ -140,4 +140,13 @@ public class WACalculatorTest {
         assertTrue(tulos.contains("Ratkaisu XML-tiedostona:"));
         assertTrue(tulos.contains(calc.getEngine().toURL(query)));
     }
+
+    @Test
+    public void testQuery11() {
+        String input = "\\sum_{i=0}^{\\infty} 1/i!";
+        List<String> results = calc.query(input);
+        assertEquals(results.get(0), "e");
+        assertEquals(results.get(1), "2.718281828459045235360287471352662497757"
+                + "247093699959574966…");
+    }
 }

@@ -21,6 +21,9 @@ import java.util.List;
  */
 public class WACalculator {
 
+    private static final char EQUALS = 63449;
+    private static final char NEPER = 63309;
+
     private WAEngine engine;
     private String error;
     private boolean debug;
@@ -92,10 +95,11 @@ public class WACalculator {
     private String getResult(WAPod pod) {
         Object o = pod.getSubpods()[0].getContents()[0];
         String result = ((WAPlainText) o).getText();
-        int idx = result.indexOf('');
+        int idx = result.indexOf(EQUALS);
         if (idx != -1) {
             result = result.substring(idx + 1);
         }
+        result = replaceNeper(result);
         return result;
     }
 
@@ -131,5 +135,15 @@ public class WACalculator {
         System.out.println(query.toWebsiteURL());
         System.out.println("Ratkaisu XML-tiedostona:");
         System.out.println(engine.toURL(query));
+    }
+
+    private String replaceNeper(String result) {
+        char[] chars = result.toCharArray();
+        for (int i = 0; i < result.length(); i++) {
+            if (chars[i] == NEPER) {
+                chars[i] = 'e';
+            }
+        }
+        return new String(chars);
     }
 }
