@@ -21,10 +21,12 @@ import java.util.List;
  */
 public class WACalculator {
 
+    // Vastaavat xml-tiedoston rikkinäisiä symboleita.
     private static final char EQUALS = 63449;
     private static final char NEPER = 63309;
+    private static final char IMAGINARY = 63310;
 
-    private WAEngine engine;
+    private final WAEngine engine;
     private String error;
     private boolean debug;
 
@@ -40,86 +42,6 @@ public class WACalculator {
         engine.setAppID(appid);
         engine.addFormat(format);
         this.debug = debug;
-    }
-
-    /**
-     * Kysyy API:lta laskun tulosta.
-     *
-     * @param input Laskutoimitus tekstinä.
-     * @return Lista vaihtoehtoisista ratkaisuista.
-     */
-    public List<String> query(String input) {
-        error = null;
-        WAQuery query = engine.createQuery();
-        query.setInput(input);
-
-        if (debug) {
-            printDebug(query);
-        }
-
-        WAQueryResult queryResult;
-        try {
-            queryResult = engine.performQuery(query);
-        } catch (WAException e) {
-            error = "Tapahtui verkkovirhe.";
-            return null;
-        }
-        return processResults(queryResult);
-    }
-
-    private List<String> processResults(WAQueryResult queryResult) {
-        if (queryResult.isError()) {
-            error = "AppID virheellinen.";
-            return null;
-        }
-        if (!queryResult.isSuccess()) {
-            error = "Syöte virheellinen.";
-            return null;
-        }
-        List<String> results = new ArrayList();
-        for (WAPod pod : queryResult.getPods()) {
-            if (pod.getID().equals("Result")
-                    || pod.getID().equals("AlternateForm")
-                    || pod.getID().equals("ExpandedForm")
-                    || pod.getID().equals("DecimalApproximation")
-                    || ((pod.getTitle().equals("Derivative")
-                    || pod.getTitle().equals("Indefinite integral")
-                    || pod.getTitle().equals("Definite integral"))
-                    && pod.getPosition() == 100)) {
-                results.add(getResult(pod));
-            }
-        }
-        return results;
-    }
-
-    private String getResult(WAPod pod) {
-        Object o = pod.getSubpods()[0].getContents()[0];
-        String result = ((WAPlainText) o).getText();
-        result = trimResult(result);
-        result = replaceNeper(result);
-        return result;
-    }
-
-    private String trimResult(String result) {
-        int idx = result.indexOf(EQUALS);
-        if (idx != -1) {
-            result = result.substring(idx + 1);
-        }
-        idx = result.indexOf('≈');
-        if (idx != -1) {
-            result = result.substring(0, idx);
-        }
-        return result;
-    }
-
-    private String replaceNeper(String result) {
-        char[] chars = result.toCharArray();
-        for (int i = 0; i < result.length(); i++) {
-            if (chars[i] == NEPER) {
-                chars[i] = 'e';
-            }
-        }
-        return new String(chars);
     }
 
     /**
@@ -147,6 +69,120 @@ public class WACalculator {
      */
     public void setDebug(boolean debug) {
         this.debug = debug;
+    }
+
+    /**
+     * Kysyy API:lta laskun tulosta.
+     *
+     * @param input Laskutoimitus tekstinä.
+     * @return Lista vaihtoehtoisista ratkaisuista.
+     */
+    public List<String> query(String input) {
+        if (input.isEmpty()) {
+            error = "Syöte virheellinen.";
+            return null;
+        }
+        WAQuery query = createQuery(input);
+        WAQueryResult queryResult;
+        try {
+            queryResult = engine.performQuery(query);
+        } catch (WAException e) {
+            error = "Tapahtui verkkovirhe.";
+            return null;
+        }
+        if (!checkResults(queryResult)) {
+            return null;
+        } else {
+            return processResults(queryResult);
+        }
+    }
+
+    private WAQuery createQuery(String input) {
+        WAQuery query = engine.createQuery();
+        query.setInput(input);
+        if (debug) {
+            printDebug(query);
+        }
+        return query;
+    }
+
+    private boolean checkResults(WAQueryResult queryResult) {
+        if (queryResult.isError()) {
+            error = "AppID virheellinen.";
+            return false;
+        } else if (!queryResult.isSuccess()) {
+            error = "Syöte virheellinen.";
+            return false;
+        }
+        return true;
+    }
+
+    private List<String> processResults(WAQueryResult queryResult) {
+        List<String> results = extractResults(queryResult);
+        trimResults(results);
+        replaceSymbols(results);
+        return results;
+    }
+
+    private List<String> extractResults(WAQueryResult queryResult) {
+        List<String> results = new ArrayList();
+        for (WAPod pod : queryResult.getPods()) {
+            if (pod.getID().equals("Result")
+                    || pod.getID().equals("AlternateForm")
+                    || pod.getID().equals("ExpandedForm")
+                    || pod.getID().equals("DecimalApproximation")
+                    || pod.getID().equals("AlternateFormAssumingAllVariables"
+                            + "AreReal")
+                    || ((pod.getTitle().equals("Derivative")
+                    || pod.getTitle().equals("Indefinite integral")
+                    || pod.getTitle().equals("Definite integral"))
+                    && pod.getPosition() == 100)) {
+                results.add(getResult(pod));
+            }
+        }
+        return results;
+    }
+
+    private String getResult(WAPod pod) {
+        Object o = pod.getSubpods()[0].getContents()[0];
+        String result = ((WAPlainText) o).getText();
+        return result;
+    }
+
+    private void trimResults(List<String> results) {
+        for (int i = 0; i < results.size(); i++) {
+            results.set(i, trimResult(results.get(i)));
+        }
+    }
+
+    private String trimResult(String result) {
+        int idx = result.indexOf(EQUALS);
+        if (idx != -1) {
+            result = result.substring(idx + 1);
+        }
+        idx = result.indexOf('≈');
+        if (idx != -1) {
+            result = result.substring(0, idx);
+        }
+        return result;
+    }
+
+    private void replaceSymbols(List<String> results) {
+        for (int i = 0; i < results.size(); i++) {
+            results.set(i, replaceSymbols(results.get(i)));
+        }
+    }
+
+    private String replaceSymbols(String result) {
+        char[] chars = result.toCharArray();
+        for (int i = 0; i < result.length(); i++) {
+            if (chars[i] == NEPER) {
+                chars[i] = 'e';
+            } else if (chars[i] == IMAGINARY) {
+                chars[i] = 'i';
+            }
+        }
+        return new String(chars);
     }
 
     private void printDebug(WAQuery query) {

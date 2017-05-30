@@ -52,14 +52,16 @@ public class WACalculatorTest {
     public void testQuery() {
         calc.getEngine().setAppID(APPID + "1");
         String input = "1+1";
-        calc.query(input);
+        List<String> results = calc.query(input);
+        assertNull(results);
         assertEquals(calc.getError(), "AppID virheellinen.");
     }
 
     @Test
     public void testQuery2() {
         String input = "@@";
-        calc.query(input);
+        List<String> results = calc.query(input);
+        assertNull(results);
         assertEquals(calc.getError(), "Syöte virheellinen.");
     }
 
@@ -67,10 +69,9 @@ public class WACalculatorTest {
     public void testQuery3() {
         String input = "\\pi";
         List<String> results = calc.query(input);
-        assertNull(calc.getError());
         assertEquals(results.get(0), "3.141592653589793238462643383279502884197"
                 + "169399375105820974…");
-        assertEquals(results.size(), 1);
+        assertNull(calc.getError());
     }
 
     @Test
@@ -79,7 +80,6 @@ public class WACalculatorTest {
         List<String> results = calc.query(input);
         assertEquals(results.get(0), "1/4 (2 n + 1)^2 - 1/4");
         assertEquals(results.get(1), "n^2 + n");
-        assertEquals(results.size(), 2);
     }
 
     @Test
@@ -89,7 +89,6 @@ public class WACalculatorTest {
         assertEquals(results.get(0), "1/2 n (n + 1)");
         assertEquals(results.get(1), "1/8 (2 n + 1)^2 - 1/8");
         assertEquals(results.get(2), "n^2/2 + n/2");
-        assertEquals(results.size(), 3);
     }
 
     @Test
@@ -123,17 +122,12 @@ public class WACalculatorTest {
     @Test
     public void testQuery10() {
         calc.setDebug(true);
-
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
-
         String input = "1+1";
-
         WAQuery query = calc.getEngine().createQuery();
         query.setInput(input);
-
         calc.query(input);
-
         String tulos = out.toString();
         assertTrue(tulos.contains("Ratkaisu WA:n sivuilla:"));
         assertTrue(tulos.contains(query.toWebsiteURL()));
@@ -155,5 +149,20 @@ public class WACalculatorTest {
         String input = "\\int_0^1 2 \\pi x";
         List<String> results = calc.query(input);
         assertEquals(results.get(0), "π");
+    }
+
+    @Test
+    public void testQuery13() {
+        String input = "";
+        List<String> results = calc.query(input);
+        assertNull(results);
+        assertEquals(calc.getError(), "Syöte virheellinen.");
+    }
+
+    @Test
+    public void testQuery14() {
+        String input = "e^{ix}";
+        List<String> results = calc.query(input);
+        assertEquals(results.get(0), "cos(x) + i sin(x)");
     }
 }

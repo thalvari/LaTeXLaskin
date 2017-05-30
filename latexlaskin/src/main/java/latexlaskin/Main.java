@@ -20,7 +20,9 @@ public class Main {
     private static final String MODE = "plaintext";
     private static final boolean DEBUG = true;
 
-    private static final String INPUT = "\\int_0^1 2 \\pi x";
+    private static final String INPUT = "|2x-2|";
+
+    private static WACalculator calc;
 
     /**
      * Ohjelman suoritus alkaa pääluokan main-metodista.
@@ -28,26 +30,31 @@ public class Main {
      * @param args komentoriviparametrit
      */
     public static void main(String[] args) {
-        Logger.getLogger("com.wolfram.alpha.net.URLFetcher")
-                .setLevel(Level.OFF);
-        WACalculator calc = new WACalculator(APPID, MODE, DEBUG);
-        String input = INPUT;
+        disableAPILogging();
+        calc = new WACalculator(APPID, MODE, DEBUG);
+        List<String> results;
         switch (args.length) {
             case 0:
+                results = calc.query(INPUT);
                 break;
             case 1:
-                input = args[0];
+                results = calc.query(args[0]);
                 break;
             default:
                 System.out.println("Anna parametrina korkeintaan yksi"
                         + " merkkijono.");
                 return;
         }
-        List<String> results = calc.query(input);
-        if (calc.getError() != null) {
+        printResults(results);
+    }
+
+    private static void printResults(List<String> results) {
+        if (results == null) {
             System.out.println(calc.getError());
         } else {
-            if (results.size() == 1) {
+            if (results.isEmpty()) {
+                System.out.println("Ei tuettu.");
+            } else if (results.size() == 1) {
                 System.out.println("Ratkaisu:");
             } else {
                 System.out.println("Vaihtoehtoiset ratkaisut:");
@@ -56,5 +63,10 @@ public class Main {
                 System.out.println(result);
             }
         }
+    }
+
+    private static void disableAPILogging() {
+        Logger.getLogger("com.wolfram.alpha.net.URLFetcher")
+                .setLevel(Level.OFF);
     }
 }
