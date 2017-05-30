@@ -1,10 +1,10 @@
+package latexlaskin.wacalculator;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package latexlaskin;
-
 import com.wolfram.alpha.WAQuery;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -88,7 +88,8 @@ public class WACalculatorTest {
         List<String> results = calc.query(input);
         assertEquals(results.get(0), "1/2 n (n + 1)");
         assertEquals(results.get(1), "1/8 (2 n + 1)^2 - 1/8");
-        assertEquals(results.get(2), "n^2/2 + n/2");
+        assertEquals(results.get(2), "(n/2 + 1/2) n");
+        assertEquals(results.get(3), "n^2/2 + n/2");
     }
 
     @Test
@@ -164,5 +165,14 @@ public class WACalculatorTest {
         String input = "e^{ix}";
         List<String> results = calc.query(input);
         assertEquals(results.get(0), "cos(x) + i sin(x)");
+    }
+
+    @Test
+    public void testQuery15() {
+        String input = "|2x-2|";
+        List<String> results = calc.query(input);
+        assertEquals(results.get(0), "2 abs(x - 1)");
+        assertEquals(results.get(1), "abs(2 - 2 x)");
+        assertEquals(results.get(2), "sqrt((2 x - 2)^2)");
     }
 }

@@ -8,6 +8,8 @@ package latexlaskin;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import latexlaskin.wacalculator.WACalculator;
+import latexlaskin.latexconverter.LaTeXConverter;
 
 /**
  * Ohjelman suoritus alkaa pääluokasta.
@@ -32,6 +34,7 @@ public class Main {
     public static void main(String[] args) {
         disableAPILogging();
         calc = new WACalculator(APPID, MODE, DEBUG);
+
         List<String> results;
         switch (args.length) {
             case 0:
@@ -45,7 +48,8 @@ public class Main {
                         + " merkkijono.");
                 return;
         }
-        printResults(results);
+//        printResults(results);
+        printResults(LaTeXConverter.convert(results));
     }
 
     private static void printResults(List<String> results) {

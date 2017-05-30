@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package latexlaskin;
+package latexlaskin.wacalculator;
 
 import com.wolfram.alpha.WAEngine;
 import com.wolfram.alpha.WAException;
@@ -11,7 +11,9 @@ import com.wolfram.alpha.WAPlainText;
 import com.wolfram.alpha.WAPod;
 import com.wolfram.alpha.WAQuery;
 import com.wolfram.alpha.WAQueryResult;
+import com.wolfram.alpha.WASubpod;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,6 +27,14 @@ public class WACalculator {
     private static final char EQUALS = 63449;
     private static final char NEPER = 63309;
     private static final char IMAGINARY = 63310;
+
+    private static final String[] SUPPORTED_POD_IDS = {
+        "Result", "AlternateForm", "ExpandedForm", "DecimalApproximation",
+        "AlternateFormAssumingAllVariablesAreReal"
+    };
+    private static final String[] SUPPORTED_FIRST_POD_TITLES = {
+        "Derivative", "Indefinite integral", "Definite integral"
+    };
 
     private final WAEngine engine;
     private String error;
@@ -127,26 +137,27 @@ public class WACalculator {
     private List<String> extractResults(WAQueryResult queryResult) {
         List<String> results = new ArrayList();
         for (WAPod pod : queryResult.getPods()) {
-            if (pod.getID().equals("Result")
-                    || pod.getID().equals("AlternateForm")
-                    || pod.getID().equals("ExpandedForm")
-                    || pod.getID().equals("DecimalApproximation")
-                    || pod.getID().equals("AlternateFormAssumingAllVariables"
-                            + "AreReal")
-                    || ((pod.getTitle().equals("Derivative")
-                    || pod.getTitle().equals("Indefinite integral")
-                    || pod.getTitle().equals("Definite integral"))
-                    && pod.getPosition() == 100)) {
-                results.add(getResult(pod));
+            if (isSupported(pod)) {
+                results.addAll(extractResults(pod));
             }
         }
         return results;
     }
 
-    private String getResult(WAPod pod) {
-        Object o = pod.getSubpods()[0].getContents()[0];
-        String result = ((WAPlainText) o).getText();
-        return result;
+    private boolean isSupported(WAPod pod) {
+        return Arrays.asList(SUPPORTED_POD_IDS).contains(pod.getID())
+                || (Arrays.asList(SUPPORTED_FIRST_POD_TITLES).contains(
+                        pod.getTitle()) && pod.getPosition() == 100);
+    }
+
+    private List<String> extractResults(WAPod pod) {
+        List<String> results = new ArrayList();
+        for (WASubpod subpod : pod.getSubpods()) {
+            for (Object o : subpod.getContents()) {
+                results.add(((WAPlainText) o).getText());
+            }
+        }
+        return results;
     }
 
     private void trimResults(List<String> results) {
