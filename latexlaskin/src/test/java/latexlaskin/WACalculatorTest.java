@@ -149,4 +149,11 @@ public class WACalculatorTest {
         assertEquals(results.get(1), "2.718281828459045235360287471352662497757"
                 + "247093699959574966…");
     }
+
+    @Test
+    public void testQuery12() {
+        String input = "\\int_0^1 2 \\pi x";
+        List<String> results = calc.query(input);
+        assertEquals(results.get(0), "π");
+    }
 }
