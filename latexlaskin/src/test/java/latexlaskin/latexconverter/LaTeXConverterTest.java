@@ -5,13 +5,12 @@
  */
 package latexlaskin.latexconverter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import latexlaskin.wacalculator.WACalculator;
 import static org.junit.Assert.assertEquals;
-import org.junit.Before;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
@@ -20,33 +19,40 @@ import org.junit.Test;
  */
 public class LaTeXConverterTest {
 
-    private static final String APPID = "WJ628E-G3H5VTERP4";
-    private static final String MODE = "plaintext";
-
-    private WACalculator calc;
-
-    @Before
-    public void setUp() {
-        Logger.getLogger("com.wolfram.alpha.net.URLFetcher")
-                .setLevel(Level.OFF);
-        calc = new WACalculator(APPID, MODE, false);
+    @Test
+    public void testConvertResults() {
+        String[] results = {"1/2 n (n + 1)"};
+        List<String> teXResults
+                = LaTeXConverter.convert(Arrays.asList(results));
+        assertEquals(teXResults.get(0), "\\frac{1}{2} n (n + 1)");
     }
 
     @Test
-    public void testConvertResults() {
+    public void testConvertResults2() {
+        List<String> teXResults = LaTeXConverter.convert(new ArrayList());
+        assertTrue(teXResults.isEmpty());
+    }
+
+    @Test
+    public void testConvertResults3() {
+        List<String> teXResults = LaTeXConverter.convert(null);
+        assertNull(teXResults);
+    }
+
+    @Test
+    public void testConvertResults4() {
         String[] results = {
-            "2 abs(x - 1)", "abs(2 - 2 x)", "sqrt((2 x - 2)^2)"
+            "1/8 (2 n + 1)^2 - 1/8", "(n/2 + 1/2) n", "n^2/2 + n/2"
+        };
+        String[] modelTeXResults = {
+            "\\frac{1}{8} (2 n + 1)^2 - \\frac{1}{8}",
+            "(\\frac{n}{2} + \\frac{1}{2}) n",
+            "\\frac{n^2}{2} + \\frac{n}{2}"
         };
         List<String> teXResults
                 = LaTeXConverter.convert(Arrays.asList(results));
         for (int i = 0; i < teXResults.size(); i++) {
-            assertEquals(teXResults.get(i),
-                    LaTeXConverter.convert(results[i]));
+            assertEquals(teXResults.get(i), modelTeXResults[i]);
         }
-    }
-
-    @Test
-    public void testConvertResult() {
-        // TODO
     }
 }

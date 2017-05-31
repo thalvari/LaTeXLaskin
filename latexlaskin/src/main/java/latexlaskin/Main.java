@@ -22,7 +22,7 @@ public class Main {
     private static final String MODE = "plaintext";
     private static final boolean DEBUG = true;
 
-    private static final String INPUT = "|2x-2|";
+    private static final String INPUT = "";
 
     private static WACalculator calc;
 
@@ -32,7 +32,7 @@ public class Main {
      * @param args komentoriviparametrit
      */
     public static void main(String[] args) {
-        disableAPILogging();
+        disableLogging();
         calc = new WACalculator(APPID, MODE, DEBUG);
 
         List<String> results;
@@ -69,7 +69,7 @@ public class Main {
         }
     }
 
-    private static void disableAPILogging() {
+    private static void disableLogging() {
         Logger.getLogger("com.wolfram.alpha.net.URLFetcher")
                 .setLevel(Level.OFF);
     }
