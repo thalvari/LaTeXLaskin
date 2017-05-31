@@ -153,7 +153,7 @@ public class WACalculatorTest {
         String input = "";
         List<String> results = calc.query(input);
         Assert.assertNull(results);
-        Assert.assertEquals(calc.getError(), "Syöte virheellinen.");
+        Assert.assertEquals(calc.getError(), "Tyhjä syöte.");
     }
 
     @Test

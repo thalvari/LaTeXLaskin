@@ -81,7 +81,7 @@ public class WACalculator {
      */
     public List<String> query(String input) {
         if (input.isEmpty()) {
-            error = "Syöte virheellinen.";
+            error = "Tyhjä syöte.";
             return null;
         }
         WAQuery query = createQuery(input);

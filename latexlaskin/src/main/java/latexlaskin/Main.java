@@ -21,7 +21,7 @@ public class Main {
     private static final String MODE = "plaintext";
     private static final boolean DEBUG = true;
 
-    private static final String INPUT = "((x/2)^2 + 1)/(x^2/2 + 2)";
+    private static final String INPUT = "";
 
     private static WACalculator calc;
 
