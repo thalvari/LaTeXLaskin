@@ -5,13 +5,8 @@
  */
 package latexlaskin.latexconverter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import org.junit.Test;
+import java.util.*;
+import org.junit.*;
 
 /**
  *
@@ -20,23 +15,29 @@ import org.junit.Test;
 public class LaTeXConverterTest {
 
     @Test
+    public void testLaTeXConverter() {
+        LaTeXConverter conv = new LaTeXConverter();
+        Assert.assertNotNull(conv);
+    }
+
+    @Test
     public void testConvertResults() {
         String[] results = {"1/2 n (n + 1)"};
         List<String> teXResults
                 = LaTeXConverter.convert(Arrays.asList(results));
-        assertEquals(teXResults.get(0), "\\frac{1}{2} n (n + 1)");
+        Assert.assertEquals(teXResults.get(0), "\\frac{1}{2} n (n + 1)");
     }
 
     @Test
     public void testConvertResults2() {
         List<String> teXResults = LaTeXConverter.convert(new ArrayList());
-        assertTrue(teXResults.isEmpty());
+        Assert.assertTrue(teXResults.isEmpty());
     }
 
     @Test
     public void testConvertResults3() {
         List<String> teXResults = LaTeXConverter.convert(null);
-        assertNull(teXResults);
+        Assert.assertNull(teXResults);
     }
 
     @Test
@@ -52,7 +53,25 @@ public class LaTeXConverterTest {
         List<String> teXResults
                 = LaTeXConverter.convert(Arrays.asList(results));
         for (int i = 0; i < teXResults.size(); i++) {
-            assertEquals(teXResults.get(i), modelTeXResults[i]);
+            Assert.assertEquals(teXResults.get(i), modelTeXResults[i]);
+        }
+    }
+
+    @Test
+    public void testConvertResults5() {
+        String[] results = {
+            "(x^2/4 + 1)/(x^2/2 + 1)", "x^2/(4 (x^2/2 + 1)) + 1/(x^2/2 + 1)",
+            "(4 (x^2/4 + 2))/(x^2/2 + 1)"
+        };
+        String[] modelTeXResults = {
+            "\\frac{(\\frac{x^2}{4} + 1)}{(\\frac{x^2}{2} + 1)}",
+            "\\frac{x^2}{(4 (\\frac{x^2}{2} + 1))} + \\frac{1}{(\\frac{x^2}{2}"
+            + " + 1)}", "\\frac{(4 (\\frac{x^2}{4} + 2))}{(\\frac{x^2}{2} + 1)}"
+        };
+        List<String> teXResults
+                = LaTeXConverter.convert(Arrays.asList(results));
+        for (int i = 0; i < teXResults.size(); i++) {
+            Assert.assertEquals(teXResults.get(i), modelTeXResults[i]);
         }
     }
 }

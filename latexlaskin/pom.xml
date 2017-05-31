@@ -16,7 +16,6 @@
                 <version>1.2.0</version>
                 <configuration>
                     <excludedClasses>
-                        <param>com.wolfram.alpha.*</param>
                         <param>latexlaskin.Main</param>
                         <param>latexlaskin.AlphaAPISample</param>
                     </excludedClasses>
@@ -29,7 +28,6 @@
                 <configuration>
                     <instrumentation>
                         <excludes>
-                            <exclude>com/wolfram/alpha/**</exclude>
                             <exclude>latexlaskin/Main.class</exclude>
                             <exclude>latexlaskin/AlphaAPISample.class</exclude>
                         </excludes>

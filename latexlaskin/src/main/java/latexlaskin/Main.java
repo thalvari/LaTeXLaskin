@@ -5,11 +5,10 @@
  */
 package latexlaskin;
 
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import latexlaskin.wacalculator.WACalculator;
-import latexlaskin.latexconverter.LaTeXConverter;
+import java.util.*;
+import java.util.logging.*;
+import latexlaskin.latexconverter.*;
+import latexlaskin.wacalculator.*;
 
 /**
  * Ohjelman suoritus alkaa pääluokasta.
@@ -22,7 +21,7 @@ public class Main {
     private static final String MODE = "plaintext";
     private static final boolean DEBUG = true;
 
-    private static final String INPUT = "";
+    private static final String INPUT = "((x/2)^2 + 1)/(x^2/2 + 2)";
 
     private static WACalculator calc;
 
@@ -48,24 +47,21 @@ public class Main {
                         + " merkkijono.");
                 return;
         }
-//        printResults(results);
-        printResults(LaTeXConverter.convert(results));
+        printResults(results);
     }
 
     private static void printResults(List<String> results) {
         if (results == null) {
             System.out.println(calc.getError());
-        } else {
-            if (results.isEmpty()) {
-                System.out.println("Ei tuettu.");
-            } else if (results.size() == 1) {
-                System.out.println("Ratkaisu:");
-            } else {
-                System.out.println("Vaihtoehtoiset ratkaisut:");
-            }
-            for (String result : results) {
-                System.out.println(result);
-            }
+            return;
+        }
+        System.out.println("Tulostetaan tuetut ratkaisut:");
+        for (String result : results) {
+            System.out.println(result);
+        }
+        System.out.println("Ja samat TeX-koodina:");
+        for (String teXResult : LaTeXConverter.convert(results)) {
+            System.out.println(teXResult);
         }
     }
 

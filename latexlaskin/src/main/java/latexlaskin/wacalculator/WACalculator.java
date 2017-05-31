@@ -5,16 +5,8 @@
  */
 package latexlaskin.wacalculator;
 
-import com.wolfram.alpha.WAEngine;
-import com.wolfram.alpha.WAException;
-import com.wolfram.alpha.WAPlainText;
-import com.wolfram.alpha.WAPod;
-import com.wolfram.alpha.WAQuery;
-import com.wolfram.alpha.WAQueryResult;
-import com.wolfram.alpha.WASubpod;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.wolfram.alpha.*;
+import java.util.*;
 
 /**
  * Tekee laskutoimitukset hyödyntäen API:a.
@@ -129,6 +121,7 @@ public class WACalculator {
 
     private List<String> processResults(WAQueryResult queryResult) {
         List<String> results = extractResults(queryResult);
+        results = removeBadResults(results);
         trimResults(results);
         replaceSymbols(results);
         return results;
@@ -158,6 +151,16 @@ public class WACalculator {
             }
         }
         return results;
+    }
+
+    private List<String> removeBadResults(List<String> results) {
+        List<String> goodResults = new ArrayList();
+        for (String result : results) {
+            if (!result.contains("(for")) {
+                goodResults.add(result);
+            }
+        }
+        return goodResults;
     }
 
     private void trimResults(List<String> results) {

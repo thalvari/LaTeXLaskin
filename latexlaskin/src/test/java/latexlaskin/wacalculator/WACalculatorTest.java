@@ -5,15 +5,11 @@ package latexlaskin.wacalculator;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.wolfram.alpha.WAQuery;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import com.wolfram.alpha.*;
+import java.io.*;
+import java.util.*;
+import java.util.logging.*;
+import org.junit.*;
 
 /**
  *
@@ -35,17 +31,17 @@ public class WACalculatorTest {
 
     @Test
     public void testWACalculator() {
-        assertNotNull(calc);
+        Assert.assertNotNull(calc);
     }
 
     @Test
     public void testWACalculator2() {
-        assertEquals(calc.getEngine().getAppID(), APPID);
+        Assert.assertEquals(calc.getEngine().getAppID(), APPID);
     }
 
     @Test
     public void testWACalculator3() {
-        assertEquals(calc.getEngine().getFormats()[0], MODE);
+        Assert.assertEquals(calc.getEngine().getFormats()[0], MODE);
     }
 
     @Test
@@ -53,71 +49,71 @@ public class WACalculatorTest {
         calc.getEngine().setAppID(APPID + "1");
         String input = "1+1";
         List<String> results = calc.query(input);
-        assertNull(results);
-        assertEquals(calc.getError(), "AppID virheellinen.");
+        Assert.assertNull(results);
+        Assert.assertEquals(calc.getError(), "AppID virheellinen.");
     }
 
     @Test
     public void testQuery2() {
         String input = "@@";
         List<String> results = calc.query(input);
-        assertNull(results);
-        assertEquals(calc.getError(), "Syöte virheellinen.");
+        Assert.assertNull(results);
+        Assert.assertEquals(calc.getError(), "Syöte virheellinen.");
     }
 
     @Test
     public void testQuery3() {
         String input = "\\pi";
         List<String> results = calc.query(input);
-        assertEquals(results.get(0), "3.141592653589793238462643383279502884197"
+        Assert.assertEquals(results.get(0), "3.141592653589793238462643383279502884197"
                 + "169399375105820974…");
-        assertNull(calc.getError());
+        Assert.assertNull(calc.getError());
     }
 
     @Test
     public void testQuery4() {
         String input = "n(n+1)";
         List<String> results = calc.query(input);
-        assertEquals(results.get(0), "1/4 (2 n + 1)^2 - 1/4");
-        assertEquals(results.get(1), "n^2 + n");
+        Assert.assertEquals(results.get(0), "1/4 (2 n + 1)^2 - 1/4");
+        Assert.assertEquals(results.get(1), "n^2 + n");
     }
 
     @Test
     public void testQuery5() {
         String input = "\\sum_{i=0}^n i";
         List<String> results = calc.query(input);
-        assertEquals(results.get(0), "1/2 n (n + 1)");
-        assertEquals(results.get(1), "1/8 (2 n + 1)^2 - 1/8");
-        assertEquals(results.get(2), "(n/2 + 1/2) n");
-        assertEquals(results.get(3), "n^2/2 + n/2");
+        Assert.assertEquals(results.get(0), "1/2 n (n + 1)");
+        Assert.assertEquals(results.get(1), "1/8 (2 n + 1)^2 - 1/8");
+        Assert.assertEquals(results.get(2), "(n/2 + 1/2) n");
+        Assert.assertEquals(results.get(3), "n^2/2 + n/2");
     }
 
     @Test
     public void testQuery6() {
         String input = "\\log_2 8";
         List<String> results = calc.query(input);
-        assertEquals(results.get(0), "3");
+        Assert.assertEquals(results.get(0), "3");
     }
 
     @Test
     public void testQuery7() {
         String input = "d/dx 2x";
         List<String> results = calc.query(input);
-        assertEquals(results.get(0), "2");
+        Assert.assertEquals(results.get(0), "2");
     }
 
     @Test
     public void testQuery8() {
         String input = "\\int 2x";
         List<String> results = calc.query(input);
-        assertEquals(results.get(0), "x^2 + constant");
+        Assert.assertEquals(results.get(0), "x^2 + constant");
     }
 
     @Test
     public void testQuery9() {
         String input = "\\int_0^1 2x";
         List<String> results = calc.query(input);
-        assertEquals(results.get(0), "1");
+        Assert.assertEquals(results.get(0), "1");
     }
 
     @Test
@@ -130,18 +126,18 @@ public class WACalculatorTest {
         query.setInput(input);
         calc.query(input);
         String tulos = out.toString();
-        assertTrue(tulos.contains("Ratkaisu WA:n sivuilla:"));
-        assertTrue(tulos.contains(query.toWebsiteURL()));
-        assertTrue(tulos.contains("Ratkaisu XML-tiedostona:"));
-        assertTrue(tulos.contains(calc.getEngine().toURL(query)));
+        Assert.assertTrue(tulos.contains("Ratkaisu WA:n sivuilla:"));
+        Assert.assertTrue(tulos.contains(query.toWebsiteURL()));
+        Assert.assertTrue(tulos.contains("Ratkaisu XML-tiedostona:"));
+        Assert.assertTrue(tulos.contains(calc.getEngine().toURL(query)));
     }
 
     @Test
     public void testQuery11() {
         String input = "\\sum_{i=0}^{\\infty} 1/i!";
         List<String> results = calc.query(input);
-        assertEquals(results.get(0), "e");
-        assertEquals(results.get(1), "2.718281828459045235360287471352662497757"
+        Assert.assertEquals(results.get(0), "e");
+        Assert.assertEquals(results.get(1), "2.718281828459045235360287471352662497757"
                 + "247093699959574966…");
     }
 
@@ -149,30 +145,38 @@ public class WACalculatorTest {
     public void testQuery12() {
         String input = "\\int_0^1 2 \\pi x";
         List<String> results = calc.query(input);
-        assertEquals(results.get(0), "π");
+        Assert.assertEquals(results.get(0), "π");
     }
 
     @Test
     public void testQuery13() {
         String input = "";
         List<String> results = calc.query(input);
-        assertNull(results);
-        assertEquals(calc.getError(), "Syöte virheellinen.");
+        Assert.assertNull(results);
+        Assert.assertEquals(calc.getError(), "Syöte virheellinen.");
     }
 
     @Test
     public void testQuery14() {
         String input = "e^{ix}";
         List<String> results = calc.query(input);
-        assertEquals(results.get(0), "cos(x) + i sin(x)");
+        Assert.assertEquals(results.get(0), "cos(x) + i sin(x)");
     }
 
     @Test
     public void testQuery15() {
         String input = "|2x-2|";
         List<String> results = calc.query(input);
-        assertEquals(results.get(0), "2 abs(x - 1)");
-        assertEquals(results.get(1), "abs(2 - 2 x)");
-        assertEquals(results.get(2), "sqrt((2 x - 2)^2)");
+        Assert.assertEquals(results.get(0), "2 abs(x - 1)");
+        Assert.assertEquals(results.get(1), "abs(2 - 2 x)");
+        Assert.assertEquals(results.get(2), "sqrt((2 x - 2)^2)");
+    }
+
+    @Test
+    public void testQuery16() {
+        String input = "((x/2)^2 + 1)/(x^2/2 + 2)";
+        List<String> results = calc.query(input);
+        Assert.assertEquals(results.get(0), "x^2/(4 (x^2/2 + 2)) + 1/(x^2/2 + 2"
+                + ")");
     }
 }
