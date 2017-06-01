@@ -5,10 +5,11 @@
  */
 package latexlaskin;
 
+import latexlaskin.wa.WACalculator;
 import java.util.*;
 import java.util.logging.*;
 import latexlaskin.latexconverter.*;
-import latexlaskin.wacalculator.*;
+import latexlaskin.wa.WAResultProcesser;
 
 /**
  * Ohjelman suoritus alkaa pääluokasta.
@@ -21,7 +22,7 @@ public class Main {
     private static final String MODE = "plaintext";
     private static final boolean DEBUG = true;
 
-    private static final String INPUT = "";
+    private static final String INPUT = "\\sum_{i=0}^n i";
 
     private static WACalculator calc;
 
@@ -47,21 +48,27 @@ public class Main {
                         + " merkkijono.");
                 return;
         }
-        printResults(results);
+        printAllResults(results);
     }
 
-    private static void printResults(List<String> results) {
+    private static void printAllResults(List<String> results) {
         if (results == null) {
             System.out.println(calc.getError());
             return;
         }
-        System.out.println("Tulostetaan tuetut ratkaisut:");
+        System.out.println("Tuetut ratkaisut:");
+        printResults(results);
+        results = WAResultProcesser.process(results);
+        System.out.println("Prosessoituna:");
+        printResults(results);
+        results = LaTeXConverter.convert(results);
+        System.out.println("LaTeX-koodina:");
+        printResults(results);
+    }
+
+    private static void printResults(List<String> results) {
         for (String result : results) {
             System.out.println(result);
-        }
-        System.out.println("Ja samat TeX-koodina:");
-        for (String teXResult : LaTeXConverter.convert(results)) {
-            System.out.println(teXResult);
         }
     }
 

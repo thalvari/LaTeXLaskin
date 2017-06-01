@@ -5,17 +5,18 @@
  */
 package latexlaskin.latexconverter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Muuttaa WACalculatorin antamat vastaukset LaTeX-koodiksi.
+ * Muuttaa prosessoidut vastaukset LaTeX-koodiksi.
  *
  * @author thalvari
  */
 public class LaTeXConverter {
 
     /**
-     * Tyhjä konstruktori, jotta parempi testien rivikattavuus.
+     * Tyhjä konstruktori.
      */
     public LaTeXConverter() {
     }

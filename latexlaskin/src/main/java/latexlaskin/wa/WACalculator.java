@@ -3,22 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package latexlaskin.wacalculator;
+package latexlaskin.wa;
 
-import com.wolfram.alpha.*;
-import java.util.*;
+import com.wolfram.alpha.WAEngine;
+import com.wolfram.alpha.WAException;
+import com.wolfram.alpha.WAPlainText;
+import com.wolfram.alpha.WAPod;
+import com.wolfram.alpha.WAQuery;
+import com.wolfram.alpha.WAQueryResult;
+import com.wolfram.alpha.WASubpod;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * Tekee laskutoimitukset hyödyntäen API:a.
+ * Ratkaisee laskuja hyödyntäen WA:n API:a.
  *
  * @author thalvari
  */
 public class WACalculator {
-
-    // Vastaavat xml-tiedoston rikkinäisiä symboleita.
-    private static final char EQUALS = 63449;
-    private static final char NEPER = 63309;
-    private static final char IMAGINARY = 63310;
 
     private static final String[] SUPPORTED_POD_IDS = {
         "Result", "AlternateForm", "ExpandedForm", "DecimalApproximation",
@@ -33,7 +36,7 @@ public class WACalculator {
     private boolean debug;
 
     /**
-     * Luokan konstruktori.
+     * Konstruktori.
      *
      * @param appid Käyttäjän AppID.
      * @param format Mitä halutaan mukaan vastaukseen.
@@ -47,16 +50,16 @@ public class WACalculator {
     }
 
     /**
-     * Palauttaa luodun laskumoottorin.
+     * Palauttaa laskumoottorin.
      *
-     * @return laskumoottori
+     * @return Laskumoottori.
      */
     public WAEngine getEngine() {
         return engine;
     }
 
     /**
-     * Palauttaa mahdollisen virheviestin.
+     * Palauttaa edellisen virheviestin.
      *
      * @return Virheviesti.
      */
@@ -74,10 +77,11 @@ public class WACalculator {
     }
 
     /**
-     * Kysyy API:lta laskun tulosta.
+     * Kysyy API:lta laskun tulosta, palauttaen kaikki ratkaisut tuetuista
+     * podeista.
      *
-     * @param input Laskutoimitus tekstinä.
-     * @return Lista vaihtoehtoisista ratkaisuista.
+     * @param input Syöte.
+     * @return Ratkaisut.
      */
     public List<String> query(String input) {
         if (input.isEmpty()) {
@@ -95,7 +99,7 @@ public class WACalculator {
         if (!checkResults(queryResult)) {
             return null;
         } else {
-            return processResults(queryResult);
+            return extractResults(queryResult);
         }
     }
 
@@ -119,14 +123,6 @@ public class WACalculator {
         return true;
     }
 
-    private List<String> processResults(WAQueryResult queryResult) {
-        List<String> results = extractResults(queryResult);
-        results = removeBadResults(results);
-        trimResults(results);
-        replaceSymbols(results);
-        return results;
-    }
-
     private List<String> extractResults(WAQueryResult queryResult) {
         List<String> results = new ArrayList();
         for (WAPod pod : queryResult.getPods()) {
@@ -140,7 +136,7 @@ public class WACalculator {
     private boolean isSupported(WAPod pod) {
         return Arrays.asList(SUPPORTED_POD_IDS).contains(pod.getID())
                 || (Arrays.asList(SUPPORTED_FIRST_POD_TITLES).contains(
-                        pod.getTitle()) && pod.getPosition() == 100);
+                pod.getTitle()) && pod.getPosition() == 100);
     }
 
     private List<String> extractResults(WAPod pod) {
@@ -153,56 +149,10 @@ public class WACalculator {
         return results;
     }
 
-    private List<String> removeBadResults(List<String> results) {
-        List<String> goodResults = new ArrayList();
-        for (String result : results) {
-            if (!result.contains("(for")) {
-                goodResults.add(result);
-            }
-        }
-        return goodResults;
-    }
-
-    private void trimResults(List<String> results) {
-        for (int i = 0; i < results.size(); i++) {
-            results.set(i, trimResult(results.get(i)));
-        }
-    }
-
-    private String trimResult(String result) {
-        int idx = result.indexOf(EQUALS);
-        if (idx != -1) {
-            result = result.substring(idx + 1);
-        }
-        idx = result.indexOf('≈');
-        if (idx != -1) {
-            result = result.substring(0, idx);
-        }
-        return result;
-    }
-
-    private void replaceSymbols(List<String> results) {
-        for (int i = 0; i < results.size(); i++) {
-            results.set(i, replaceSymbols(results.get(i)));
-        }
-    }
-
-    private String replaceSymbols(String result) {
-        char[] chars = result.toCharArray();
-        for (int i = 0; i < result.length(); i++) {
-            if (chars[i] == NEPER) {
-                chars[i] = 'e';
-            } else if (chars[i] == IMAGINARY) {
-                chars[i] = 'i';
-            }
-        }
-        return new String(chars);
-    }
-
     private void printDebug(WAQuery query) {
-        System.out.println("Ratkaisu WA:n sivuilla:");
+        System.out.println("Ratkaisut WA:n sivuilla:");
         System.out.println(query.toWebsiteURL());
-        System.out.println("Ratkaisu XML-tiedostona:");
+        System.out.println("Ratkaisut XML-tiedostona:");
         System.out.println(engine.toURL(query));
     }
 }
