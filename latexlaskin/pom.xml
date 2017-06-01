@@ -66,6 +66,8 @@
                 <version>2.17</version>
                 <configuration>
                     <configLocation>checkstyle.xml</configLocation>
+                    <excludes>latexlaskin/Main.java,
+                        latexlaskin/AlphaAPISample.java</excludes>
                 </configuration>
             </plugin>            
             <plugin>

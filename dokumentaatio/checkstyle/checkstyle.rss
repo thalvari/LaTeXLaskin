@@ -25,7 +25,7 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2017</copyright>
     <item>
-      <title>File: 5,
+      <title>File: 3,
              Errors: 0,
              Warnings: 0,
              Infos: 0
@@ -75,34 +75,6 @@ under the License.
                           <tr>
                 <td>
                   <a href="${project.url}/checkstyle.html#latexlaskin.wa.WAResultProcesser.java">latexlaskin/wa/WAResultProcesser.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#latexlaskin.AlphaAPISample.java">latexlaskin/AlphaAPISample.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#latexlaskin.Main.java">latexlaskin/Main.java</a>
                 </td>
                 <td>
                   0

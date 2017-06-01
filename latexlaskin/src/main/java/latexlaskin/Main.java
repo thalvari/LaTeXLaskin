@@ -21,6 +21,7 @@ public class Main {
     public static void main(String[] args) {
         if (args.length > 1) {
             System.out.println("Anna parametrina korkeintaan yksi merkkijono.");
+            return;
         }
         String input = INPUT;
         if (args.length == 1) {
