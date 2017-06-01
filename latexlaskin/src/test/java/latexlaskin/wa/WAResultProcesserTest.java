@@ -12,10 +12,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
-/**
- *
- * @author thalvari
- */
 public class WAResultProcesserTest {
 
     @Test

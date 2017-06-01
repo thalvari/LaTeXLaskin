@@ -18,10 +18,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- *
- * @author thalvari
- */
 public class WACalculatorTest {
 
     private static final String APPID = "WJ628E-G3H5VTERP4";

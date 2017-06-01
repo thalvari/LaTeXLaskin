@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Ratkaisee laskuja hyödyntäen WA:n API:a.
+ * Ratkaisee laskuja API:a hyödyntäen.
  *
  * @author thalvari
  */
@@ -39,7 +39,7 @@ public class WACalculator {
      * Konstruktori.
      *
      * @param appid Käyttäjän AppID.
-     * @param format Mitä halutaan mukaan vastaukseen.
+     * @param format Tuetut formaatit ratkaisuille.
      * @param debug Käytetäänkö debuggaustilaa.
      */
     public WACalculator(String appid, String format, boolean debug) {
@@ -136,7 +136,7 @@ public class WACalculator {
     private boolean isSupported(WAPod pod) {
         return Arrays.asList(SUPPORTED_POD_IDS).contains(pod.getID())
                 || (Arrays.asList(SUPPORTED_FIRST_POD_TITLES).contains(
-                pod.getTitle()) && pod.getPosition() == 100);
+                        pod.getTitle()) && pod.getPosition() == 100);
     }
 
     private List<String> extractResults(WAPod pod) {

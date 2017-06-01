@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Muuttaa prosessoidut vastaukset LaTeX-koodiksi.
+ * Kääntää prosessoituja ratkaisuja LaTeX-koodiksi.
  *
  * @author thalvari
  */
@@ -22,11 +22,10 @@ public class LaTeXConverter {
     }
 
     /**
-     * Muuttaa WACalculatorin antamat vastaukset LaTeX-koodiksi. Muuttaa
-     * jakolaskujen esitystavan muotoon \frac{}{}.
+     * Muuttaa jakolaskujen esitystavan muotoon \frac{}{}.
      *
-     * @param results WACalculatorin tulokset.
-     * @return Tulokset LaTeX-koodina.
+     * @param results Prosessoidut ratkaisut.
+     * @return Ratkaisut LaTeX-koodina.
      */
     public static List<String> convert(List<String> results) {
         if (results == null) {

@@ -11,49 +11,30 @@ import java.util.logging.*;
 import latexlaskin.latexconverter.*;
 import latexlaskin.wa.WAResultProcesser;
 
-/**
- * Ohjelman suoritus alkaa pääluokasta.
- *
- * @author thalvari
- */
 public class Main {
 
     private static final String APPID = "WJ628E-G3H5VTERP4";
     private static final String MODE = "plaintext";
     private static final boolean DEBUG = true;
-
     private static final String INPUT = "\\sum_{i=0}^n i";
 
-    private static WACalculator calc;
-
-    /**
-     * Ohjelman suoritus alkaa pääluokan main-metodista.
-     *
-     * @param args komentoriviparametrit
-     */
     public static void main(String[] args) {
-        disableLogging();
-        calc = new WACalculator(APPID, MODE, DEBUG);
-
-        List<String> results;
-        switch (args.length) {
-            case 0:
-                results = calc.query(INPUT);
-                break;
-            case 1:
-                results = calc.query(args[0]);
-                break;
-            default:
-                System.out.println("Anna parametrina korkeintaan yksi"
-                        + " merkkijono.");
-                return;
+        if (args.length > 1) {
+            System.out.println("Anna parametrina korkeintaan yksi merkkijono.");
         }
-        printAllResults(results);
+        String input = INPUT;
+        if (args.length == 1) {
+            input = args[0];
+        }
+        disableLogging();
+        WACalculator calc = new WACalculator(APPID, MODE, DEBUG);
+        List<String> results = calc.query(input);
+        printAllResults(results, calc.getError());
     }
 
-    private static void printAllResults(List<String> results) {
+    private static void printAllResults(List<String> results, String error) {
         if (results == null) {
-            System.out.println(calc.getError());
+            System.out.println(error);
             return;
         }
         System.out.println("Tuetut ratkaisut:");

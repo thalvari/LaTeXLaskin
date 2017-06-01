@@ -11,10 +11,6 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- *
- * @author thalvari
- */
 public class LaTeXConverterTest {
 
     @Test

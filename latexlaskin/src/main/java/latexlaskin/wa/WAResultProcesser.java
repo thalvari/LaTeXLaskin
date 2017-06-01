@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Prosessoi API:lta saadut ratkaisut.
+ * Prosessoi API:lta saatuja ratkaisuja.
  *
  * @author thalvari
  */
