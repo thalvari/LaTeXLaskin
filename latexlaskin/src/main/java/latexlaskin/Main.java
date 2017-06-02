@@ -5,18 +5,17 @@
  */
 package latexlaskin;
 
-import latexlaskin.wa.WACalculator;
-import java.util.*;
-import java.util.logging.*;
-import latexlaskin.latexconverter.*;
-import latexlaskin.wa.WAResultProcesser;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import latexlaskin.calculator.latexconverter.LaTeXConverter;
+import latexlaskin.calculator.wa.WACalculator;
+import latexlaskin.calculator.wa.WAResultProcesser;
 
 public class Main {
 
     private static final String APPID = "WJ628E-G3H5VTERP4";
-    private static final String MODE = "plaintext";
-    private static final boolean DEBUG = true;
-    private static final String INPUT = "\\sum_{i=0}^n i";
+    private static final String INPUT = "e^{ix}";
 
     public static void main(String[] args) {
         if (args.length > 1) {
@@ -28,7 +27,7 @@ public class Main {
             input = args[0];
         }
         disableLogging();
-        WACalculator calc = new WACalculator(APPID, MODE, DEBUG);
+        WACalculator calc = new WACalculator(APPID);
         List<String> results = calc.query(input);
         printAllResults(results, calc.getError());
     }

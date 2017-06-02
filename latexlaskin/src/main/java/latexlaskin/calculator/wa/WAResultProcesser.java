@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package latexlaskin.wa;
+package latexlaskin.calculator.wa;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class WAResultProcesser {
         return results;
     }
 
-    private static List<String> removeBadResults(List<String> results) {
+    public static List<String> removeBadResults(List<String> results) {
         List<String> goodResults = new ArrayList();
         for (String result : results) {
             if (!result.contains("(for")) {
@@ -49,7 +49,7 @@ public class WAResultProcesser {
         return goodResults;
     }
 
-    private static void trimResults(List<String> results) {
+    public static void trimResults(List<String> results) {
         for (int i = 0; i < results.size(); i++) {
             results.set(i, trimResult(results.get(i)));
         }

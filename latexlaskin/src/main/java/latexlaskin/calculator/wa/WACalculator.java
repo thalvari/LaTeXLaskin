@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package latexlaskin.wa;
+package latexlaskin.calculator.wa;
 
 import com.wolfram.alpha.WAEngine;
 import com.wolfram.alpha.WAException;
@@ -30,6 +30,8 @@ public class WACalculator {
     private static final String[] SUPPORTED_FIRST_POD_TITLES = {
         "Derivative", "Indefinite integral", "Definite integral"
     };
+    private static final String FORMAT = "plaintext";
+    private static final boolean DEBUG = true;
 
     private final WAEngine engine;
     private String error;
@@ -39,14 +41,12 @@ public class WACalculator {
      * Konstruktori.
      *
      * @param appid Käyttäjän AppID.
-     * @param format Tuetut formaatit ratkaisuille.
-     * @param debug Käytetäänkö debuggaustilaa.
      */
-    public WACalculator(String appid, String format, boolean debug) {
+    public WACalculator(String appid) {
         engine = new WAEngine();
         engine.setAppID(appid);
-        engine.addFormat(format);
-        this.debug = debug;
+        engine.addFormat(FORMAT);
+        this.debug = DEBUG;
     }
 
     /**

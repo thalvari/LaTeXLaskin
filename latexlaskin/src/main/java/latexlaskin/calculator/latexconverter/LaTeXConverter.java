@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package latexlaskin.latexconverter;
+package latexlaskin.calculator.latexconverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +43,7 @@ public class LaTeXConverter {
         return result;
     }
 
-    private static String replaceSlashes(String result) {
+    public static String replaceSlashes(String result) {
         int idx = result.indexOf('/');
         while (idx != -1) {
             result = constructResult(idx, calcNumStart(idx, result),
