@@ -13,7 +13,6 @@ import com.wolfram.alpha.WAQuery;
 import com.wolfram.alpha.WAQueryResult;
 import com.wolfram.alpha.WASubpod;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,13 +25,6 @@ import java.util.logging.Logger;
 public class WACalculator {
 
     private static final String FORMAT = "plaintext";
-    private static final String[] SUPPORTED_POD_IDS = {
-        "Result", "AlternateForm", "ExpandedForm", "DecimalApproximation",
-        "AlternateFormAssumingAllVariablesAreReal"
-    };
-    private static final String[] SUPPORTED_FIRST_POD_TITLES = {
-        "Derivative", "Indefinite integral", "Definite integral"
-    };
 
     private final WAEngine engine;
     private String error;
@@ -42,13 +34,14 @@ public class WACalculator {
      * Konstruktori.
      *
      * @param appid Käyttäjän AppID.
+     * @param debug Debug-tila päälle tai pois.
      */
     public WACalculator(String appid, boolean debug) {
-        disableLogging();
         engine = new WAEngine();
         engine.setAppID(appid);
         engine.addFormat(FORMAT);
         this.debug = debug;
+        disableLogging();
     }
 
     /**
@@ -101,17 +94,11 @@ public class WACalculator {
     private List<String> extractResults(WAQueryResult queryResult) {
         List<String> results = new ArrayList();
         for (WAPod pod : queryResult.getPods()) {
-            if (isSupported(pod)) {
+            if (WASupported.isSupported(pod)) {
                 results.addAll(extractResults(pod));
             }
         }
         return results;
-    }
-
-    private boolean isSupported(WAPod pod) {
-        return Arrays.asList(SUPPORTED_POD_IDS).contains(pod.getID())
-                || (Arrays.asList(SUPPORTED_FIRST_POD_TITLES).contains(
-                        pod.getTitle()) && pod.getPosition() == 100);
     }
 
     private List<String> extractResults(WAPod pod) {
@@ -136,34 +123,19 @@ public class WACalculator {
                 .setLevel(Level.OFF);
     }
 
-    /**
-     * Palauttaa laskumoottorin.
-     *
-     * @return Laskumoottori.
-     */
     public WAEngine getEngine() {
         return engine;
     }
 
-    /**
-     * Palauttaa edellisen virheviestin.
-     *
-     * @return Virheviesti.
-     */
     public String getError() {
         return error;
     }
 
-    /**
-     * Asettaa debug-tilan päälle tai pois.
-     *
-     * @param debug Uusi tila.
-     */
-    public void setDebug(boolean debug) {
-        this.debug = debug;
-    }
-
     public boolean isDebug() {
         return debug;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
     }
 }

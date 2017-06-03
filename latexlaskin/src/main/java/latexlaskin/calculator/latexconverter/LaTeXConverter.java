@@ -15,15 +15,6 @@ import java.util.List;
  */
 public class LaTeXConverter {
 
-    private static final char IMAGINARY = 63310;
-    private static final char NEPER = 63309;
-    private static final String[] WA_SYMBOLS = {
-        "" + NEPER, "" + IMAGINARY, "π"
-    };
-    private static final String[] LATEX_SYMBOLS = {
-        "\\mathrm{e}", "\\mathrm{i}", "\\pi"
-    };
-
     /**
      * Tyhjä konstruktori.
      */
@@ -137,13 +128,13 @@ public class LaTeXConverter {
     }
 
     private static String replaceSymbols(String result) {
-        for (int i = 0; i < WA_SYMBOLS.length; i++) {
-            int idx = result.indexOf(WA_SYMBOLS[i]);
+        for (String key : LaTeXDictionary.getKeys()) {
+            String value = LaTeXDictionary.getValue(key);
+            int idx = result.indexOf(key);
             while (idx != -1) {
-                result = result.substring(0, idx) + LATEX_SYMBOLS[i]
-                        + result.substring(idx + WA_SYMBOLS[i].length(),
-                                result.length());
-                idx = result.indexOf(WA_SYMBOLS[i]);
+                result = result.substring(0, idx) + value
+                        + result.substring(idx + key.length(), result.length());
+                idx = result.indexOf(key, idx + value.length() - 1);
             }
         }
         return result;

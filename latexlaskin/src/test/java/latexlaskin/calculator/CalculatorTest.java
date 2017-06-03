@@ -8,9 +8,13 @@ package latexlaskin.calculator;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -67,7 +71,7 @@ public class CalculatorTest {
     public void testQuery4() {
         String input = "e^{ix}";
         List<String> results = calc.query(input);
-        assertEquals(results.get(0), "cos(x) + \\mathrm{i} sin(x)");
+        assertEquals(results.get(0), "\\cos(x) + \\mathrm{i} \\sin(x)");
         assertNull(calc.getError());
     }
 

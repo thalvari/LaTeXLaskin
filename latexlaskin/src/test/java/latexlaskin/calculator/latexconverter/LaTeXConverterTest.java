@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package latexlaskin.calculator.latexConverter;
+package latexlaskin.calculator.latexconverter;
 
 import java.util.ArrayList;
 import java.util.List;
-import latexlaskin.calculator.latexconverter.LaTeXConverter;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
@@ -79,6 +78,6 @@ public class LaTeXConverterTest {
         List<String> results = new ArrayList();
         results.add("cos(x) + " + IMAGINARY + " sin(x)");
         LaTeXConverter.replaceSymbols(results);
-        assertEquals(results.get(0), "cos(x) + \\mathrm{i} sin(x)");
+        assertEquals(results.get(0), "\\cos(x) + \\mathrm{i} \\sin(x)");
     }
 }
