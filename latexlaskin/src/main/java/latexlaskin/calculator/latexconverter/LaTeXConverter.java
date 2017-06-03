@@ -9,11 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Kääntää prosessoituja ratkaisuja LaTeX-koodiksi.
+ * Metodeja ratkaisujen kääntämiseen LaTeX-koodiksi.
  *
  * @author thalvari
  */
 public class LaTeXConverter {
+
+    private static final char IMAGINARY = 63310;
+    private static final char NEPER = 63309;
+    private static final String[] WA_SYMBOLS = {
+        "" + NEPER, "" + IMAGINARY, "π"
+    };
+    private static final String[] LATEX_SYMBOLS = {
+        "\\mathrm{e}", "\\mathrm{i}", "\\pi"
+    };
 
     /**
      * Tyhjä konstruktori.
@@ -22,28 +31,20 @@ public class LaTeXConverter {
     }
 
     /**
-     * Muuttaa jakolaskujen esitystavan muotoon \frac{}{}.
+     * Muokkaa jakolaskujen esitystavan muotoon \frac{}{}.
      *
-     * @param results Prosessoidut ratkaisut.
-     * @return Ratkaisut LaTeX-koodina.
+     * @param results Ratkaisut.
+     * @return Muokatut ratkaisut.
      */
-    public static List<String> convert(List<String> results) {
-        if (results == null) {
-            return null;
-        }
-        List<String> convertedResults = new ArrayList();
+    public static List<String> replaceSlashes(List<String> results) {
+        List<String> modifiedResults = new ArrayList();
         for (String result : results) {
-            convertedResults.add(convert(result));
+            modifiedResults.add(replaceSlashes(result));
         }
-        return convertedResults;
+        return modifiedResults;
     }
 
-    private static String convert(String result) {
-        result = replaceSlashes(result);
-        return result;
-    }
-
-    public static String replaceSlashes(String result) {
+    private static String replaceSlashes(String result) {
         int idx = result.indexOf('/');
         while (idx != -1) {
             result = constructResult(idx, calcNumStart(idx, result),
@@ -122,5 +123,29 @@ public class LaTeXConverter {
                 + result.substring(numStart, idx) + "}{"
                 + result.substring(idx + 1, denomEnd + 1) + "}"
                 + result.substring(denomEnd + 1, result.length());
+    }
+
+    /**
+     * Korvaa symboleja LaTeX-vastineilla.
+     *
+     * @param results Ratkaisut.
+     */
+    public static void replaceSymbols(List<String> results) {
+        for (int i = 0; i < results.size(); i++) {
+            results.set(i, replaceSymbols(results.get(i)));
+        }
+    }
+
+    private static String replaceSymbols(String result) {
+        for (int i = 0; i < WA_SYMBOLS.length; i++) {
+            int idx = result.indexOf(WA_SYMBOLS[i]);
+            while (idx != -1) {
+                result = result.substring(0, idx) + LATEX_SYMBOLS[i]
+                        + result.substring(idx + WA_SYMBOLS[i].length(),
+                                result.length());
+                idx = result.indexOf(WA_SYMBOLS[i]);
+            }
+        }
+        return result;
     }
 }

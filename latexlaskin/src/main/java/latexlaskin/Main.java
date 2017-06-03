@@ -6,16 +6,14 @@
 package latexlaskin;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import latexlaskin.calculator.latexconverter.LaTeXConverter;
-import latexlaskin.calculator.wa.WACalculator;
-import latexlaskin.calculator.wa.WAResultProcesser;
+import latexlaskin.calculator.Calculator;
 
 public class Main {
 
     private static final String APPID = "WJ628E-G3H5VTERP4";
     private static final String INPUT = "e^{ix}";
+
+    private static Calculator calc;
 
     public static void main(String[] args) {
         if (args.length > 1) {
@@ -26,35 +24,18 @@ public class Main {
         if (args.length == 1) {
             input = args[0];
         }
-        disableLogging();
-        WACalculator calc = new WACalculator(APPID);
+        calc = new Calculator(APPID);
         List<String> results = calc.query(input);
-        printAllResults(results, calc.getError());
-    }
-
-    private static void printAllResults(List<String> results, String error) {
-        if (results == null) {
-            System.out.println(error);
-            return;
-        }
-        System.out.println("Tuetut ratkaisut:");
-        printResults(results);
-        results = WAResultProcesser.process(results);
-        System.out.println("Prosessoituna:");
-        printResults(results);
-        results = LaTeXConverter.convert(results);
-        System.out.println("LaTeX-koodina:");
         printResults(results);
     }
 
     private static void printResults(List<String> results) {
+        if (results == null) {
+            System.out.println(calc.getError());
+        }
+        System.out.println("Ratkaisut LaTeX-koodina:");
         for (String result : results) {
             System.out.println(result);
         }
-    }
-
-    private static void disableLogging() {
-        Logger.getLogger("com.wolfram.alpha.net.URLFetcher")
-                .setLevel(Level.OFF);
     }
 }

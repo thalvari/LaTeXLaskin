@@ -7,4 +7,5 @@ Päivä | Tunnit | Kuvaus
 29.05.2017 | 2h | Uusi kansiorakenne ja API jar-tiedostona.
 30.05.2017 | 3h | Refaktorointia, uusia ominaisuuksia ja lisää testejä.
 31.05.2017 | 3h | Konvertterille uusia ominaisuuksia.
+02.06.2017 | 2h | Refaktorointia, uusi luokka.
 ... | ... | ...

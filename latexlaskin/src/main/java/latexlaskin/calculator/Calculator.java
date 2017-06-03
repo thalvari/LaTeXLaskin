@@ -16,15 +16,29 @@ import latexlaskin.calculator.wa.WAResultProcesser;
  */
 public class Calculator {
 
-    private WACalculator calc;
+    private static final boolean DEBUG = true;
+
+    private WACalculator wACalc;
+    private String error;
+    private boolean debug;
 
     public Calculator(String appid) {
-        calc = new WACalculator(appid);
+        wACalc = new WACalculator(appid, DEBUG);
+        debug = DEBUG;
     }
 
     public List<String> query(String input) {
-        List<String> results = calc.query(input);
+        List<String> results = wACalc.query(input);
+        if (results == null) {
+            error = wACalc.getError();
+            return null;
+        }
         results = process(results);
+        if (debug) {
+            System.out.println("Prosessoidut ratkaisut:");
+            printResults(results);
+        }
+        results = convert(results);
         return results;
     }
 
@@ -35,7 +49,27 @@ public class Calculator {
     }
 
     private List<String> convert(List<String> results) {
-//        results = LaTeXConverter.replaceSlashes(results);
+        results = LaTeXConverter.replaceSlashes(results);
+        LaTeXConverter.replaceSymbols(results);
         return results;
+    }
+
+    private void printResults(List<String> results) {
+        for (String result : results) {
+            System.out.println(result);
+        }
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+        wACalc.setDebug(debug);
+    }
+
+    public WACalculator getWACalc() {
+        return wACalc;
     }
 }

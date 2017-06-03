@@ -15,6 +15,8 @@ import com.wolfram.alpha.WASubpod;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Ratkaisee laskuja API:a hyödyntäen.
@@ -23,6 +25,7 @@ import java.util.List;
  */
 public class WACalculator {
 
+    private static final String FORMAT = "plaintext";
     private static final String[] SUPPORTED_POD_IDS = {
         "Result", "AlternateForm", "ExpandedForm", "DecimalApproximation",
         "AlternateFormAssumingAllVariablesAreReal"
@@ -30,8 +33,6 @@ public class WACalculator {
     private static final String[] SUPPORTED_FIRST_POD_TITLES = {
         "Derivative", "Indefinite integral", "Definite integral"
     };
-    private static final String FORMAT = "plaintext";
-    private static final boolean DEBUG = true;
 
     private final WAEngine engine;
     private String error;
@@ -42,37 +43,11 @@ public class WACalculator {
      *
      * @param appid Käyttäjän AppID.
      */
-    public WACalculator(String appid) {
+    public WACalculator(String appid, boolean debug) {
+        disableLogging();
         engine = new WAEngine();
         engine.setAppID(appid);
         engine.addFormat(FORMAT);
-        this.debug = DEBUG;
-    }
-
-    /**
-     * Palauttaa laskumoottorin.
-     *
-     * @return Laskumoottori.
-     */
-    public WAEngine getEngine() {
-        return engine;
-    }
-
-    /**
-     * Palauttaa edellisen virheviestin.
-     *
-     * @return Virheviesti.
-     */
-    public String getError() {
-        return error;
-    }
-
-    /**
-     * Asettaa debug-tilan päälle tai pois.
-     *
-     * @param debug Uusi tila.
-     */
-    public void setDebug(boolean debug) {
         this.debug = debug;
     }
 
@@ -154,5 +129,41 @@ public class WACalculator {
         System.out.println(query.toWebsiteURL());
         System.out.println("Ratkaisut XML-tiedostona:");
         System.out.println(engine.toURL(query));
+    }
+
+    private static void disableLogging() {
+        Logger.getLogger("com.wolfram.alpha.net.URLFetcher")
+                .setLevel(Level.OFF);
+    }
+
+    /**
+     * Palauttaa laskumoottorin.
+     *
+     * @return Laskumoottori.
+     */
+    public WAEngine getEngine() {
+        return engine;
+    }
+
+    /**
+     * Palauttaa edellisen virheviestin.
+     *
+     * @return Virheviesti.
+     */
+    public String getError() {
+        return error;
+    }
+
+    /**
+     * Asettaa debug-tilan päälle tai pois.
+     *
+     * @param debug Uusi tila.
+     */
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
+    public boolean isDebug() {
+        return debug;
     }
 }

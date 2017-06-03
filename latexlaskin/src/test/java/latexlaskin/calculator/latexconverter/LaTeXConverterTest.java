@@ -3,74 +3,82 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package latexlaskin.calculator.latexconverter;
+package latexlaskin.calculator.latexConverter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import org.junit.Assert;
+import latexlaskin.calculator.latexconverter.LaTeXConverter;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 public class LaTeXConverterTest {
 
+    private static final char IMAGINARY = 63310;
+    private static final char NEPER = 63309;
+
     @Test
     public void testLaTeXConverter() {
         LaTeXConverter conv = new LaTeXConverter();
-        Assert.assertNotNull(conv);
+        assertNotNull(conv);
     }
 
     @Test
-    public void testConvertResults() {
-        String[] results = {"1/2 n (n + 1)"};
-        List<String> teXResults
-                = LaTeXConverter.convert(Arrays.asList(results));
-        Assert.assertEquals(teXResults.get(0), "\\frac{1}{2} n (n + 1)");
+    public void testReplaceSlashes() {
+        List<String> results = new ArrayList();
+        results.add("1/2 n (n + 1)");
+        results = LaTeXConverter.replaceSlashes(results);
+        assertEquals(results.get(0), "\\frac{1}{2} n (n + 1)");
     }
 
     @Test
-    public void testConvertResults2() {
-        List<String> teXResults = LaTeXConverter.convert(new ArrayList());
-        Assert.assertTrue(teXResults.isEmpty());
+    public void testReplaceSlashes2() {
+        List<String> results = new ArrayList();
+        results.add("1/8 (2 n + 1)^2 - 1/8");
+        results = LaTeXConverter.replaceSlashes(results);
+        assertEquals(results.get(0), "\\frac{1}{8} (2 n + 1)^2 - \\frac{1}{8}");
     }
 
     @Test
-    public void testConvertResults3() {
-        List<String> teXResults = LaTeXConverter.convert(null);
-        Assert.assertNull(teXResults);
+    public void testReplaceSlashes3() {
+        List<String> results = new ArrayList();
+        results.add("(x^2/4 + 1)/(x^2/2 + 1)");
+        results = LaTeXConverter.replaceSlashes(results);
+        assertEquals(results.get(0), "\\frac{(\\frac{x^2}{4} + 1)}{(\\frac{x^2}"
+                + "{2} + 1)}");
     }
 
     @Test
-    public void testConvertResults4() {
-        String[] results = {
-            "1/8 (2 n + 1)^2 - 1/8", "(n/2 + 1/2) n", "n^2/2 + n/2"
-        };
-        String[] modelTeXResults = {
-            "\\frac{1}{8} (2 n + 1)^2 - \\frac{1}{8}",
-            "(\\frac{n}{2} + \\frac{1}{2}) n",
-            "\\frac{n^2}{2} + \\frac{n}{2}"
-        };
-        List<String> teXResults
-                = LaTeXConverter.convert(Arrays.asList(results));
-        for (int i = 0; i < teXResults.size(); i++) {
-            Assert.assertEquals(teXResults.get(i), modelTeXResults[i]);
-        }
+    public void testReplaceSlashes4() {
+        List<String> results = new ArrayList();
+        results.add("x^2/(4 (x^2/2 + 1)) + 1/(x^2/2 + 1)");
+        results = LaTeXConverter.replaceSlashes(results);
+        assertEquals(results.get(0), "\\frac{x^2}{(4 (\\frac{x^2}{2} + 1))} + "
+                + "\\frac{1}{(\\frac{x^2}{2} + 1)}");
     }
 
     @Test
-    public void testConvertResults5() {
-        String[] results = {
-            "(x^2/4 + 1)/(x^2/2 + 1)", "x^2/(4 (x^2/2 + 1)) + 1/(x^2/2 + 1)",
-            "(4 (x^2/4 + 2))/(x^2/2 + 1)"
-        };
-        String[] modelTeXResults = {
-            "\\frac{(\\frac{x^2}{4} + 1)}{(\\frac{x^2}{2} + 1)}",
-            "\\frac{x^2}{(4 (\\frac{x^2}{2} + 1))} + \\frac{1}{(\\frac{x^2}{2}"
-            + " + 1)}", "\\frac{(4 (\\frac{x^2}{4} + 2))}{(\\frac{x^2}{2} + 1)}"
-        };
-        List<String> teXResults
-                = LaTeXConverter.convert(Arrays.asList(results));
-        for (int i = 0; i < teXResults.size(); i++) {
-            Assert.assertEquals(teXResults.get(i), modelTeXResults[i]);
-        }
+    public void testReplaceSlashes5() {
+        List<String> results = new ArrayList();
+        results.add("(4 (x^2/4 + 2))/(x^2/2 + 1)");
+        results = LaTeXConverter.replaceSlashes(results);
+        assertEquals(results.get(0), "\\frac{(4 (\\frac{x^2}{4} + 2))}{(\\frac{"
+                + "x^2}{2} + 1)}");
+    }
+
+    @Test
+    public void testReplaceSymbols() {
+        List<String> results = new ArrayList();
+        results.add("" + NEPER);
+        LaTeXConverter.replaceSymbols(results);
+        assertEquals(results.get(0), "\\mathrm{e}");
+    }
+
+    @Test
+    public void testReplaceSymbols2() {
+        List<String> results = new ArrayList();
+        results.add("cos(x) + " + IMAGINARY + " sin(x)");
+        LaTeXConverter.replaceSymbols(results);
+        assertEquals(results.get(0), "cos(x) + \\mathrm{i} sin(x)");
     }
 }
