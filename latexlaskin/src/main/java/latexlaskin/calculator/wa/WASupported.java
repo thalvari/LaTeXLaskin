@@ -32,6 +32,9 @@ public class WASupported {
         SUPPORTED_FIRST_POD_TITLES.add("Definite integral");
     }
 
+    public WASupported() {
+    }
+
     public static boolean isSupported(WAPod pod) {
         return SUPPORTED_POD_IDS.contains(pod.getID())
                 || (pod.getPosition() == 100

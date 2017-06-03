@@ -29,6 +29,9 @@ public class LaTeXDictionary {
         DICTIONARY.put("tan", "\\tan");
     }
 
+    public LaTeXDictionary() {
+    }
+
     public static Set<String> getKeys() {
         return DICTIONARY.keySet();
     }

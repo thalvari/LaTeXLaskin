@@ -9,7 +9,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -23,18 +22,14 @@ import org.junit.Test;
 public class CalculatorTest {
 
     private static final String APPID = "WJ628E-G3H5VTERP4";
+    private static final boolean DEBUG = false;
+    private static final String FORMAT = "plaintext";
 
     private Calculator calc;
 
     @Before
     public void setUp() {
-        calc = new Calculator(APPID);
-        calc.setDebug(false);
-    }
-
-    @Test
-    public void testCalculator() {
-        assertNotNull(calc);
+        calc = new Calculator(APPID, DEBUG, FORMAT);
     }
 
     @Test
@@ -42,18 +37,26 @@ public class CalculatorTest {
         String input = "";
         List<String> results = calc.query(input);
         assertNull(results);
+        assertNotNull(calc.getError());
     }
 
     @Test
     public void testQuery2() {
         calc.setDebug(true);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outStream));
         String input = "\\int_0^1 2 \\pi x";
         calc.query(input);
-        String result = out.toString();
-        assertTrue(result.contains("Prosessoidut ratkaisut:"));
-        assertTrue(result.contains("π"));
+        String out = outStream.toString();
+        assertTrue(out.contains("Ratkaisut WA:n sivuilla:"));
+        assertTrue(out.contains("http://www.wolframalpha.com/input/?i=%5Cint_0%"
+                + "5E1+2+%5Cpi+x"));
+        assertTrue(out.contains("Ratkaisut XML-tiedostona:"));
+        assertTrue(out.contains("http://api.wolframalpha.com/v2/query?appid=WJ6"
+                + "28E-G3H5VTERP4&input=%5Cint_0%5E1+2+%5Cpi+x&format=plaintext"
+                + "&async=false&reinterpret=true"));
+        assertTrue(out.contains("Prosessoidut ratkaisut:"));
+        assertTrue(out.contains("π"));
     }
 
     @Test
@@ -72,7 +75,6 @@ public class CalculatorTest {
         String input = "e^{ix}";
         List<String> results = calc.query(input);
         assertEquals(results.get(0), "\\cos(x) + \\mathrm{i} \\sin(x)");
-        assertNull(calc.getError());
     }
 
     @Test
@@ -81,11 +83,5 @@ public class CalculatorTest {
         List<String> results = calc.query(input);
         assertEquals(results.get(0), "\\frac{x^2}{(4 (\\frac{x^2}{2} + 2))} + "
                 + "\\frac{1}{(\\frac{x^2}{2} + 2)}");
-        assertNull(calc.getError());
-    }
-
-    @Test
-    public void testSetDebug() {
-        assertFalse(calc.getWACalc().isDebug());
     }
 }

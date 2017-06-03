@@ -134,7 +134,7 @@ public class LaTeXConverter {
             while (idx != -1) {
                 result = result.substring(0, idx) + value
                         + result.substring(idx + key.length(), result.length());
-                idx = result.indexOf(key, idx + value.length() - 1);
+                idx = result.indexOf(key, idx + value.length());
             }
         }
         return result;

@@ -16,27 +16,22 @@ import latexlaskin.calculator.wa.WAResultProcesser;
  */
 public class Calculator {
 
-    private static final boolean DEBUG = true;
-
-    private WACalculator wACalc;
-    private String error;
+    private final WACalculator waCalc;
     private boolean debug;
 
-    public Calculator(String appid) {
-        wACalc = new WACalculator(appid, DEBUG);
-        debug = DEBUG;
+    public Calculator(String appid, boolean debug, String format) {
+        waCalc = new WACalculator(appid, format);
+        this.debug = debug;
     }
 
     public List<String> query(String input) {
-        List<String> results = wACalc.query(input);
+        List<String> results = waCalc.query(input);
         if (results == null) {
-            error = wACalc.getError();
             return null;
         }
         results = process(results);
         if (debug) {
-            System.out.println("Prosessoidut ratkaisut:");
-            printResults(results);
+            printDebug(results);
         }
         results = convert(results);
         return results;
@@ -54,22 +49,22 @@ public class Calculator {
         return results;
     }
 
-    private void printResults(List<String> results) {
+    private void printDebug(List<String> results) {
+        System.out.println("Ratkaisut WA:n sivuilla:");
+        System.out.println(waCalc.getWaUrl());
+        System.out.println("Ratkaisut XML-tiedostona:");
+        System.out.println(waCalc.getWaXmlUrl());
+        System.out.println("Prosessoidut ratkaisut:");
         for (String result : results) {
             System.out.println(result);
         }
     }
 
     public String getError() {
-        return error;
+        return waCalc.getError();
     }
 
     public void setDebug(boolean debug) {
         this.debug = debug;
-        wACalc.setDebug(debug);
-    }
-
-    public WACalculator getWACalc() {
-        return wACalc;
     }
 }

@@ -24,24 +24,27 @@ import java.util.logging.Logger;
  */
 public class WACalculator {
 
-    private static final String FORMAT = "plaintext";
-
     private final WAEngine engine;
     private String error;
-    private boolean debug;
+    private String waUrl;
+    private String waXmlUrl;
 
     /**
      * Konstruktori.
      *
      * @param appid Käyttäjän AppID.
-     * @param debug Debug-tila päälle tai pois.
+     * @param format
      */
-    public WACalculator(String appid, boolean debug) {
+    public WACalculator(String appid, String format) {
         engine = new WAEngine();
         engine.setAppID(appid);
-        engine.addFormat(FORMAT);
-        this.debug = debug;
+        engine.addFormat(format);
         disableLogging();
+    }
+
+    private static void disableLogging() {
+        Logger.getLogger("com.wolfram.alpha.net.URLFetcher").setLevel(
+                Level.OFF);
     }
 
     /**
@@ -66,17 +69,15 @@ public class WACalculator {
         }
         if (!checkResults(queryResult)) {
             return null;
-        } else {
-            return extractResults(queryResult);
         }
+        waUrl = query.toWebsiteURL();
+        waXmlUrl = engine.toURL(query);
+        return extractResults(queryResult);
     }
 
     private WAQuery createQuery(String input) {
         WAQuery query = engine.createQuery();
         query.setInput(input);
-        if (debug) {
-            printDebug(query);
-        }
         return query;
     }
 
@@ -111,31 +112,15 @@ public class WACalculator {
         return results;
     }
 
-    private void printDebug(WAQuery query) {
-        System.out.println("Ratkaisut WA:n sivuilla:");
-        System.out.println(query.toWebsiteURL());
-        System.out.println("Ratkaisut XML-tiedostona:");
-        System.out.println(engine.toURL(query));
-    }
-
-    private static void disableLogging() {
-        Logger.getLogger("com.wolfram.alpha.net.URLFetcher")
-                .setLevel(Level.OFF);
-    }
-
-    public WAEngine getEngine() {
-        return engine;
-    }
-
     public String getError() {
         return error;
     }
 
-    public boolean isDebug() {
-        return debug;
+    public String getWaUrl() {
+        return waUrl;
     }
 
-    public void setDebug(boolean debug) {
-        this.debug = debug;
+    public String getWaXmlUrl() {
+        return waXmlUrl;
     }
 }
