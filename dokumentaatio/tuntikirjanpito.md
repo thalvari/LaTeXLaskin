@@ -9,4 +9,5 @@ Päivä | Tunnit | Kuvaus
 31.05.2017 | 3h | Konvertterille uusia ominaisuuksia.
 02.06.2017 | 2h | Refaktorointia, uusi luokka.
 03.06.2017 | 1h | Refaktorointia.
+05.06.2017 | 3h | Konvertterille uusia ominaisuuksia ja lisää testejä.
 ... | ... | ...

@@ -64,9 +64,10 @@ public class CalculatorTest {
         String input = "\\sum_{i=0}^n i";
         List<String> results = calc.query(input);
         assertEquals(results.get(0), "\\frac{1}{2} n (n + 1)");
-        assertEquals(results.get(1), "\\frac{1}{8} (2 n + 1)^2 - \\frac{1}{8}");
+        assertEquals(results.get(1), "\\frac{1}{8} (2 n + 1)^{2} - \\frac{1}{8}"
+                + "");
         assertEquals(results.get(2), "(\\frac{n}{2} + \\frac{1}{2}) n");
-        assertEquals(results.get(3), "\\frac{n^2}{2} + \\frac{n}{2}");
+        assertEquals(results.get(3), "\\frac{n^{2}}{2} + \\frac{n}{2}");
         assertNull(calc.getError());
     }
 
@@ -81,7 +82,19 @@ public class CalculatorTest {
     public void testQuery5() {
         String input = "((x/2)^2 + 1)/(x^2/2 + 2)";
         List<String> results = calc.query(input);
-        assertEquals(results.get(0), "\\frac{x^2}{(4 (\\frac{x^2}{2} + 2))} + "
-                + "\\frac{1}{(\\frac{x^2}{2} + 2)}");
+        assertEquals(results.get(0), "\\frac{x^{2}}{(4 (\\frac{x^{2}}{2} + 2))}"
+                + " + \\frac{1}{(\\frac{x^{2}}{2} + 2)}");
+    }
+
+    @Test
+    public void testQuery6() {
+        String input = "(1-e^2x)/(1+e^{2x})";
+        List<String> results = calc.query(input);
+//        assertEquals(results.get(0), "\\frac{1}{2} (\\mathrm{e}^{2} x - 1) ("
+//                + "\\tanh(x) - 1)");
+        assertEquals(results.get(1), "-\\frac{(\\mathrm{e}^{2} x - 1)}{("
+                + "\\mathrm{e}^{(2 x)} + 1)}");
+        assertEquals(results.get(2), "\\frac{1}{(\\mathrm{e}^{(2 x)} + 1)} - "
+                + "\\frac{(\\mathrm{e}^{2} x)}{(\\mathrm{e}^{(2 x)} + 1)}");
     }
 }

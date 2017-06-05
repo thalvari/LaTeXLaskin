@@ -9,7 +9,7 @@
     <module name='TreeWalker'>
 
         <property name='tabWidth' value='4' />
-        
+
         <!-- Block Checks -->
 
         <module name='EmptyBlock' />
@@ -71,7 +71,7 @@
             <property name='allowEmptyConstructors' value='true' />
             <property name='allowEmptyMethods' value='true' />
         </module>
-        
+
         <module name="JavadocMethod">
             <property name="scope" value="public"/>
             <property name="allowMissingParamTags" value="false"/>
@@ -80,7 +80,7 @@
             <property name="allowMissingReturnTag" value="false"/>
             <property name="allowThrowsTagsForSubclasses" value="true"/>
         </module>
-        
+
         <module name="JavadocStyle">
             <property name="scope" value="public"/>
             <property name="checkEmptyJavadoc" value="true"/>

@@ -6,5 +6,5 @@ LaTeX-muodossa.
 - [Aiheenmäärittely](https://github.com/thalvari/LaTeXLaskin/blob/master/dokumentaatio/aihemaarittely.md)
 - [Tuntikirjanpito](https://github.com/thalvari/LaTeXLaskin/blob/master/dokumentaatio/tuntikirjanpito.md)
 ### Raportit
-- [Checkstyle-raportti](https://htmlpreview.github.io/?https://github.com/thalvari/LaTeXLaskin/blob/master/dokumentaatio/checkstyle/checkstyle.html)
-- [PIT-raportti](https://htmlpreview.github.io/?https://github.com/thalvari/LaTeXLaskin/blob/master/dokumentaatio/pit/index.html)
+- [Checkstyle-raportti](https://htmlpreview.github.io/?https://github.com/thalvari/LaTeXLaskin/blob/master/dokumentaatio/checkstyle-raportti/checkstyle.html)
+- [PIT-raportti](https://htmlpreview.github.io/?https://github.com/thalvari/LaTeXLaskin/blob/master/dokumentaatio/pit-raportti/index.html)

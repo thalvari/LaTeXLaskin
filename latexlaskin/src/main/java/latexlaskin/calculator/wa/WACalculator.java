@@ -43,8 +43,8 @@ public class WACalculator {
     }
 
     private static void disableLogging() {
-        Logger.getLogger("com.wolfram.alpha.net.URLFetcher").setLevel(
-                Level.OFF);
+        Logger.getLogger("com.wolfram.alpha.net.URLFetcher")
+                .setLevel(Level.OFF);
     }
 
     /**
@@ -59,6 +59,7 @@ public class WACalculator {
             error = "Tyhjä syöte.";
             return null;
         }
+
         WAQuery query = createQuery(input);
         WAQueryResult queryResult;
         try {
@@ -67,11 +68,12 @@ public class WACalculator {
             error = "Tapahtui verkkovirhe.";
             return null;
         }
+
         if (!checkResults(queryResult)) {
             return null;
         }
-        waUrl = query.toWebsiteURL();
-        waXmlUrl = engine.toURL(query);
+
+        setURLs(query);
         return extractResults(queryResult);
     }
 
@@ -89,7 +91,13 @@ public class WACalculator {
             error = "Syöte virheellinen.";
             return false;
         }
+
         return true;
+    }
+
+    private void setURLs(WAQuery query) {
+        waUrl = query.toWebsiteURL();
+        waXmlUrl = engine.toURL(query);
     }
 
     private List<String> extractResults(WAQueryResult queryResult) {
@@ -99,6 +107,7 @@ public class WACalculator {
                 results.addAll(extractResults(pod));
             }
         }
+
         return results;
     }
 
@@ -109,6 +118,7 @@ public class WACalculator {
                 results.add(((WAPlainText) o).getText());
             }
         }
+
         return results;
     }
 

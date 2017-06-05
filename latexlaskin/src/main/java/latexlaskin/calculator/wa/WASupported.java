@@ -36,8 +36,15 @@ public class WASupported {
     }
 
     public static boolean isSupported(WAPod pod) {
-        return SUPPORTED_POD_IDS.contains(pod.getID())
-                || (pod.getPosition() == 100
-                && SUPPORTED_FIRST_POD_TITLES.contains(pod.getTitle()));
+        return isSupportedById(pod) || isSupportedByTitle(pod);
+    }
+
+    private static boolean isSupportedById(WAPod pod) {
+        return SUPPORTED_POD_IDS.contains(pod.getID());
+    }
+
+    private static boolean isSupportedByTitle(WAPod pod) {
+        return SUPPORTED_FIRST_POD_TITLES.contains(pod.getTitle())
+                && pod.getPosition() == 100;
     }
 }

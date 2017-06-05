@@ -29,10 +29,12 @@ public class Calculator {
         if (results == null) {
             return null;
         }
+
         results = process(results);
         if (debug) {
             printDebug(results);
         }
+
         results = convert(results);
         return results;
     }
@@ -44,8 +46,8 @@ public class Calculator {
     }
 
     private List<String> convert(List<String> results) {
-        results = LaTeXConverter.replaceSlashes(results);
-        LaTeXConverter.replaceSymbols(results);
+        LaTeXConverter.replaceSlashes(results);
+        LaTeXConverter.replace(results);
         return results;
     }
 

@@ -13,13 +13,13 @@ import org.junit.Test;
  *
  * @author thalvari
  */
-public class LaTeXDictionaryTest {
+public class LaTeXDictTest {
 
-    private LaTeXDictionary dict;
+    private LaTeXDict dict;
 
     @Before
     public void setUp() {
-        dict = new LaTeXDictionary();
+        dict = new LaTeXDict();
     }
 
     @Test

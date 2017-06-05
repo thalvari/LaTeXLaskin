@@ -36,6 +36,7 @@ public class WAResultProcesser {
                 goodResults.add(result);
             }
         }
+
         return goodResults;
     }
 
@@ -51,14 +52,26 @@ public class WAResultProcesser {
     }
 
     private static String trimResult(String result) {
+        result = trimResultEquals(result);
+        result = trimResultApprox(result);
+        return result;
+    }
+
+    private static String trimResultEquals(String result) {
         int idx = result.indexOf(EQUALS);
         if (idx != -1) {
             result = result.substring(idx + 1);
         }
-        idx = result.indexOf('≈');
+
+        return result;
+    }
+
+    private static String trimResultApprox(String result) {
+        int idx = result.indexOf('≈');
         if (idx != -1) {
             result = result.substring(0, idx);
         }
+
         return result;
     }
 }
