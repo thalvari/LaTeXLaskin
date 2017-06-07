@@ -94,4 +94,13 @@ public class Calculator {
     public void setDebug(boolean debug) {
         this.debug = debug;
     }
+
+    /**
+     * Asettaa AppID:n.
+     *
+     * @param appID AppID.
+     */
+    public void setAppID(String appID) {
+        waCalc.setAppID(appID);
+    }
 }

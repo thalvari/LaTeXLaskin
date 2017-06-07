@@ -70,7 +70,7 @@
                 <version>1.2.0</version>
                 <configuration>
                     <excludedClasses>
-                        <param>latexlaskin.Main</param>
+                        <param>latexlaskin.gui.*</param>
                     </excludedClasses>
                 </configuration>
             </plugin>
@@ -87,7 +87,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>latexlaskin.Main</mainClass>
+                                    <mainClass>latexlaskin.gui.Main</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -105,7 +105,7 @@
                 <version>2.17</version>
                 <configuration>
                     <configLocation>checkstyle.xml</configLocation>
-                    <excludes>latexlaskin/Main.java</excludes>
+                    <excludes>latexlaskin/gui/*</excludes>
                 </configuration>
             </plugin>
             <plugin>

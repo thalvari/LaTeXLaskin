@@ -3,16 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package latexlaskin;
+package latexlaskin.gui;
 
 import java.util.List;
+import javafx.application.Application;
+import javafx.stage.Stage;
 import latexlaskin.calculator.Calculator;
 
 /**
  *
  * @author thalvari
  */
-public class Main {
+public class Main extends Application {
 
     private static final String APPID = "WJ628E-G3H5VTERP4";
     private static final boolean DEBUG = true;
@@ -22,19 +24,21 @@ public class Main {
     private static Calculator calc;
 
     public static void main(String[] args) {
-        if (args.length > 1) {
+        if (args.length == 0) {
+            launch(Main.class);
+        } else if (args.length > 1) {
             System.out.println("Anna parametrina korkeintaan yksi merkkijono.");
             return;
         }
 
-        String input = INPUT;
-        if (args.length == 1) {
-            input = args[0];
-        }
-
         calc = new Calculator(APPID, DEBUG, FORMAT);
-        List<String> results = calc.query(input);
+        List<String> results = calc.query(args[0]);
         printResults(results);
+    }
+
+    @Override
+    public void start(Stage stage) {
+        new GUI(stage, new Calculator(APPID, DEBUG, FORMAT)).start();
     }
 
     private static void printResults(List<String> results) {

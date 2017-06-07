@@ -72,6 +72,7 @@ public class WACalculator {
             return null;
         }
 
+        error = null;
         setURLs(query);
         return extractResults(queryResult);
     }
@@ -146,5 +147,14 @@ public class WACalculator {
      */
     public String getWaXmlUrl() {
         return waXmlUrl;
+    }
+
+    /**
+     * Asettaa AppID:n.
+     *
+     * @param appID AppID.
+     */
+    public void setAppID(String appID) {
+        engine.setAppID(appID);
     }
 }
