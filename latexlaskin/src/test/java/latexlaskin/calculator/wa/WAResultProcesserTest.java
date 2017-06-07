@@ -12,6 +12,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
+/**
+ *
+ * @author thalvari
+ */
 public class WAResultProcesserTest {
 
     private static final char EQUALS = 63449;
@@ -25,14 +29,6 @@ public class WAResultProcesserTest {
 
     @Test
     public void testTrimResults() {
-        List<String> results = new ArrayList();
-        results.add("∑_(i=0)^n i" + EQUALS + "1/2 n (n + 1)");
-        WAResultProcesser.trimResults(results);
-        assertEquals(results.get(0), "1/2 n (n + 1)");
-    }
-
-    @Test
-    public void testTrimResults2() {
         List<String> results = new ArrayList();
         results.add("∫_0^1 2 π xx" + EQUALS + "π≈3.1416");
         WAResultProcesser.trimResults(results);

@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Määrittelee mitkä API:lta saadut ratkaisut ovat tuettuja.
  *
  * @author thalvari
  */
@@ -32,9 +33,18 @@ public class WASupported {
         SUPPORTED_FIRST_POD_TITLES.add("Definite integral");
     }
 
+    /**
+     * Tyhjä konstruktori.
+     */
     public WASupported() {
     }
 
+    /**
+     * Kertoo ovatko podin ratkaisut tuettuja.
+     *
+     * @param pod Podi.
+     * @return Totuusarvo.
+     */
     public static boolean isSupported(WAPod pod) {
         return isSupportedById(pod) || isSupportedByTitle(pod);
     }

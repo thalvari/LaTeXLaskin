@@ -5,8 +5,8 @@
  */
 package latexlaskin.calculator.latexconverter;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -15,15 +15,29 @@ import org.junit.Test;
  */
 public class LaTeXDictTest {
 
-    private LaTeXDict dict;
-
-    @Before
-    public void setUp() {
-        dict = new LaTeXDict();
+    @Test
+    public void testLaTeXDict() {
+        LaTeXDict dict = new LaTeXDict();
+        assertNotNull(dict);
     }
 
     @Test
-    public void testLaTeXDictionary() {
-        assertNotNull(dict);
+    public void testGetRealKeyLength() {
+        assertEquals(LaTeXDict.getRealKeyLength("π"), 1);
+    }
+
+    @Test
+    public void testGetRealKeyLength2() {
+        assertEquals(LaTeXDict.getRealKeyLength("cos("), 3);
+    }
+
+    @Test
+    public void testGetKeys() {
+        assertEquals(LaTeXDict.getKeys().size(), 12);
+    }
+
+    @Test
+    public void testGetItem() {
+        assertNotNull(LaTeXDict.getItem("^"));
     }
 }

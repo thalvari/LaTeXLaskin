@@ -34,7 +34,8 @@ public class LaTeXConverter {
     private static String replaceSlashes(String result) {
         int idx = result.indexOf('/');
         while (idx != -1) {
-            result = constructResultFrac(result, idx,
+            result = constructResultFrac(result,
+                    idx,
                     calcStartIdx(result, "/", idx),
                     calcEndIdx(result, "/", idx));
 
@@ -45,21 +46,29 @@ public class LaTeXConverter {
     }
 
     private static int calcStartIdx(String result, String key, int idx) {
-        String revResult = reverseResult(result);
-        int revIdx = result.length() - idx - 1;
-        return result.length() - calcEndIdx(revResult, key, revIdx) - 1;
+        int revEndIdx = calcEndIdx(reverseResult(result),
+                key,
+                result.length() - idx - 1);
+
+        return result.length() - revEndIdx - 1;
     }
 
     private static String reverseResult(String result) {
-        String revResult = new StringBuilder(result).reverse().toString();
-        revResult = revResult.replace('(', 'ä');
-        revResult = revResult.replace(')', '(');
-        revResult = revResult.replace('ä', ')');
+        String revResult = "";
+        for (int i = result.length() - 1; i >= 0; i--) {
+            if (result.charAt(i) == '(') {
+                revResult += ')';
+            } else if (result.charAt(i) == ')') {
+                revResult += '(';
+            } else {
+                revResult += result.charAt(i);
+            }
+        }
         return revResult;
     }
 
     private static int calcEndIdx(String result, String key, int idx) {
-        if (result.charAt(idx + key.length()) == '(') {
+        if (result.charAt(idx + LaTeXDict.getRealKeyLength(key)) == '(') {
             return calcEndIdxPar(result, key, idx);
         } else {
             return calcEndIdxNoPar(result, key, idx);
@@ -67,7 +76,7 @@ public class LaTeXConverter {
     }
 
     private static int calcEndIdxPar(String result, String key, int idx) {
-        int endIdx = idx + key.length() - 1;
+        int endIdx = idx + LaTeXDict.getRealKeyLength(key) - 1;
         int level = 1;
         while (level > 0) {
             endIdx++;
@@ -82,11 +91,12 @@ public class LaTeXConverter {
     }
 
     private static int calcEndIdxNoPar(String result, String key, int idx) {
-        int endIdx = idx + key.length() - 1;
+        int endIdx = idx + LaTeXDict.getRealKeyLength(key) - 1;
         while (endIdx < result.length() - 1
                 && result.charAt(endIdx + 1) != ' '
                 && result.charAt(endIdx + 1) != ')'
                 && result.charAt(endIdx + 1) != '}') {
+
             endIdx++;
         }
 
@@ -95,13 +105,14 @@ public class LaTeXConverter {
 
     private static String constructResultFrac(String result, int idx,
             int startIdx, int endIdx) {
+
         return result.substring(0, startIdx)
                 + "\\frac{"
                 + result.substring(startIdx, idx)
                 + "}{"
                 + result.substring(idx + 1, endIdx + 1)
                 + "}"
-                + result.substring(endIdx + 1, result.length());
+                + result.substring(endIdx + 1);
     }
 
     /**
@@ -136,6 +147,7 @@ public class LaTeXConverter {
 
     private static String constructResult(String result, String key,
             LaTeXDictItem item, int idx) {
+
         if (item.hasClosingTag()) {
             return constructResultClosing(result, key, item, idx);
         } else {
@@ -145,23 +157,27 @@ public class LaTeXConverter {
 
     private static String constructResultClosing(String result, String key,
             LaTeXDictItem item, int idx) {
+
         int endIdx = calcEndIdx(result, key, idx);
         return result.substring(0, idx)
                 + item.getTag()
-                + result.substring(idx + key.length(), endIdx + 1)
+                + result.substring(idx + LaTeXDict.getRealKeyLength(key),
+                        endIdx + 1)
                 + item.getClosingTag()
-                + result.substring(endIdx + 1, result.length());
+                + result.substring(endIdx + 1);
     }
 
     private static String constructResultNoClosing(String result, String key,
             LaTeXDictItem item, int idx) {
+
         return result.substring(0, idx)
                 + item.getTag()
-                + result.substring(idx + key.length(), result.length());
+                + result.substring(idx + LaTeXDict.getRealKeyLength(key));
     }
 
     private static int calcNextKeyIdx(String result, String key,
             LaTeXDictItem item, int idx) {
+
         return result.indexOf(key, idx + item.getTag().length());
     }
 }

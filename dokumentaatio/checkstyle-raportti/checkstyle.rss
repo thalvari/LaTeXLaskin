@@ -25,7 +25,7 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2017</copyright>
     <item>
-      <title>File: 3,
+      <title>File: 7,
              Errors: 0,
              Warnings: 0,
              Infos: 0
@@ -46,7 +46,7 @@ under the License.
           <tbody>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#latexlaskin.wa.WACalculator.java">latexlaskin/wa/WACalculator.java</a>
+                  <a href="${project.url}/checkstyle.html#latexlaskin.calculator.wa.WAResultProcesser.java">latexlaskin/calculator/wa/WAResultProcesser.java</a>
                 </td>
                 <td>
                   0
@@ -60,7 +60,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#latexlaskin.latexconverter.LaTeXConverter.java">latexlaskin/latexconverter/LaTeXConverter.java</a>
+                  <a href="${project.url}/checkstyle.html#latexlaskin.calculator.latexconverter.LaTeXConverter.java">latexlaskin/calculator/latexconverter/LaTeXConverter.java</a>
                 </td>
                 <td>
                   0
@@ -74,7 +74,63 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#latexlaskin.wa.WAResultProcesser.java">latexlaskin/wa/WAResultProcesser.java</a>
+                  <a href="${project.url}/checkstyle.html#latexlaskin.calculator.wa.WACalculator.java">latexlaskin/calculator/wa/WACalculator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#latexlaskin.calculator.Calculator.java">latexlaskin/calculator/Calculator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#latexlaskin.calculator.latexconverter.LaTeXDict.java">latexlaskin/calculator/latexconverter/LaTeXDict.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#latexlaskin.calculator.latexconverter.LaTeXDictItem.java">latexlaskin/calculator/latexconverter/LaTeXDictItem.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#latexlaskin.calculator.wa.WASupported.java">latexlaskin/calculator/wa/WASupported.java</a>
                 </td>
                 <td>
                   0

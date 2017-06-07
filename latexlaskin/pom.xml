@@ -71,7 +71,6 @@
                 <configuration>
                     <excludedClasses>
                         <param>latexlaskin.Main</param>
-                        <param>latexlaskin.AlphaAPISample</param>
                     </excludedClasses>
                 </configuration>
             </plugin>
@@ -106,7 +105,7 @@
                 <version>2.17</version>
                 <configuration>
                     <configLocation>checkstyle.xml</configLocation>
-                    <excludes>latexlaskin/Main.java,latexlaskin/AlphaAPISample.java</excludes>
+                    <excludes>latexlaskin/Main.java</excludes>
                 </configuration>
             </plugin>
             <plugin>

@@ -90,8 +90,8 @@ public class CalculatorTest {
     public void testQuery6() {
         String input = "(1-e^2x)/(1+e^{2x})";
         List<String> results = calc.query(input);
-//        assertEquals(results.get(0), "\\frac{1}{2} (\\mathrm{e}^{2} x - 1) ("
-//                + "\\tanh(x) - 1)");
+        assertEquals(results.get(0), "\\frac{1}{2} (\\mathrm{e}^{2} x - 1) ("
+                + "\\tanh(x) - 1)");
         assertEquals(results.get(1), "-\\frac{(\\mathrm{e}^{2} x - 1)}{("
                 + "\\mathrm{e}^{(2 x)} + 1)}");
         assertEquals(results.get(2), "\\frac{1}{(\\mathrm{e}^{(2 x)} + 1)} - "

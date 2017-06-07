@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Ratkaisee laskuja API:a hyödyntäen.
+ * API:a hyödyntävä laskin.
  *
  * @author thalvari
  */
@@ -33,7 +33,7 @@ public class WACalculator {
      * Konstruktori.
      *
      * @param appid Käyttäjän AppID.
-     * @param format
+     * @param format API:n palauttamat formaatit.
      */
     public WACalculator(String appid, String format) {
         engine = new WAEngine();
@@ -48,8 +48,7 @@ public class WACalculator {
     }
 
     /**
-     * Kysyy API:lta laskun tulosta, palauttaen kaikki ratkaisut tuetuista
-     * podeista.
+     * Laskee syötteenä annetun laskun ja palauttaa tuetut vastaukset.
      *
      * @param input Syöte.
      * @return Ratkaisut.
@@ -122,14 +121,29 @@ public class WACalculator {
         return results;
     }
 
+    /**
+     * Palauttaa edellisen virheviestin.
+     *
+     * @return Virheviesti.
+     */
     public String getError() {
         return error;
     }
 
+    /**
+     * Palauttaa ratkaisujen osoitteen WA:n verkkosivuilla.
+     *
+     * @return Osoite.
+     */
     public String getWaUrl() {
         return waUrl;
     }
 
+    /**
+     * Palauttaa API:n tarjoaman XML-tiedoston osoitteen.
+     *
+     * @return Osoite.
+     */
     public String getWaXmlUrl() {
         return waXmlUrl;
     }

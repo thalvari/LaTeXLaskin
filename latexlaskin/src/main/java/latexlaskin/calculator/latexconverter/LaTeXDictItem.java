@@ -6,6 +6,7 @@
 package latexlaskin.calculator.latexconverter;
 
 /**
+ * LaTeX-sanakirjan arvona oleva olio.
  *
  * @author thalvari
  */
@@ -14,23 +15,49 @@ public class LaTeXDictItem {
     private final String tag;
     private final String closingTag;
 
+    /**
+     * Konstruktori.
+     *
+     * @param tag LaTeX-vastine.
+     * @param closingTag Loppuosa.
+     */
     public LaTeXDictItem(String tag, String closingTag) {
         this.tag = tag;
         this.closingTag = closingTag;
     }
 
+    /**
+     * Toinen konstruktori.
+     *
+     * @param tag LaTeX-vastine.
+     */
     public LaTeXDictItem(String tag) {
         this(tag, null);
     }
 
+    /**
+     * Palauttaa LaTeX-vastineen.
+     *
+     * @return LaTeX-vastine.
+     */
     public String getTag() {
         return tag;
     }
 
+    /**
+     * Palauttaa loppuosan.
+     *
+     * @return Loppuosa.
+     */
     public String getClosingTag() {
         return closingTag;
     }
 
+    /**
+     * Kertoo onko LaTeX-vastineella loppuosa.
+     *
+     * @return Totuusarvo.
+     */
     public boolean hasClosingTag() {
         return closingTag != null;
     }

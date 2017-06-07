@@ -8,12 +8,16 @@ package latexlaskin;
 import java.util.List;
 import latexlaskin.calculator.Calculator;
 
+/**
+ *
+ * @author thalvari
+ */
 public class Main {
 
     private static final String APPID = "WJ628E-G3H5VTERP4";
     private static final boolean DEBUG = true;
     private static final String FORMAT = "plaintext";
-    private static final String INPUT = "(1-e^2x)/(1+e^{2x})";
+    private static final String INPUT = "|2 x - 2|";
 
     private static Calculator calc;
 

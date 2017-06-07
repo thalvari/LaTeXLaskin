@@ -41,7 +41,7 @@ public class WAResultProcesser {
     }
 
     /**
-     * Poistaa ratkaisuista turhan tekstin.
+     * Poistaa ratkaisuista turhat osat.
      *
      * @param results Ratkaisut.
      */
