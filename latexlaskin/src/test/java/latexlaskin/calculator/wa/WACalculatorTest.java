@@ -17,7 +17,7 @@ import org.junit.Test;
  */
 public class WACalculatorTest {
 
-    private static final String APPID = "WJ628E-G3H5VTERP4";
+    private static final String APPID = "LE69JY-QUPK5KWVWV";
     private static final String FORMAT = "plaintext";
     private static final char EQUALS = 63449;
 
@@ -55,6 +55,14 @@ public class WACalculatorTest {
 
     @Test
     public void testQuery4() {
+        String input = "1";
+        List<String> results = waCalc.query(input);
+        assertNull(results);
+        assertEquals(waCalc.getError(), "Ei tuettuja ratkaisuja.");
+    }
+
+    @Test
+    public void testQuery5() {
         String input = "\\sum_{i=0}^n i";
         List<String> results = waCalc.query(input);
         assertEquals(results.get(0), "∑_(i=0)^n i" + EQUALS + "1/2 n (n + 1)");
@@ -64,7 +72,7 @@ public class WACalculatorTest {
     }
 
     @Test
-    public void testQuery5() {
+    public void testQuery6() {
         String input = "d/dx 2x";
         List<String> results = waCalc.query(input);
         assertEquals(results.get(0), "d/dx(2 x)" + EQUALS + "2");

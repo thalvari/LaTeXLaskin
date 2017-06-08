@@ -14,8 +14,6 @@ import com.wolfram.alpha.WAQueryResult;
 import com.wolfram.alpha.WASubpod;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * API:a hyödyntävä laskin.
@@ -26,8 +24,8 @@ public class WACalculator {
 
     private final WAEngine engine;
     private String error;
-    private String waUrl;
-    private String waXmlUrl;
+    private String resURL;
+    private String resXMLURL;
 
     /**
      * Konstruktori.
@@ -39,12 +37,6 @@ public class WACalculator {
         engine = new WAEngine();
         engine.setAppID(appid);
         engine.addFormat(format);
-        disableLogging();
-    }
-
-    private static void disableLogging() {
-        Logger.getLogger("com.wolfram.alpha.net.URLFetcher")
-                .setLevel(Level.OFF);
     }
 
     /**
@@ -61,6 +53,7 @@ public class WACalculator {
 
         WAQuery query = createQuery(input);
         WAQueryResult queryResult;
+        setURLs(query);
         try {
             queryResult = engine.performQuery(query);
         } catch (WAException e) {
@@ -68,13 +61,7 @@ public class WACalculator {
             return null;
         }
 
-        if (!checkResults(queryResult)) {
-            return null;
-        }
-
-        error = null;
-        setURLs(query);
-        return extractResults(queryResult);
+        return processQueryResult(queryResult);
     }
 
     private WAQuery createQuery(String input) {
@@ -83,21 +70,36 @@ public class WACalculator {
         return query;
     }
 
-    private boolean checkResults(WAQueryResult queryResult) {
+    private void setURLs(WAQuery query) {
+        resURL = query.toWebsiteURL();
+        resXMLURL = engine.toURL(query);
+    }
+
+    private List<String> processQueryResult(WAQueryResult queryResult) {
+        List<String> results = extractResults(queryResult);
+        if (!checkResults(queryResult, results)) {
+            return null;
+        }
+
+        return results;
+    }
+
+    private boolean checkResults(WAQueryResult queryResult,
+            List<String> results) {
+
         if (queryResult.isError()) {
             error = "AppID virheellinen.";
             return false;
         } else if (!queryResult.isSuccess()) {
             error = "Syöte virheellinen.";
             return false;
+        } else if (results.isEmpty()) {
+            error = "Ei tuettuja ratkaisuja.";
+            return false;
+        } else {
+            error = null;
+            return true;
         }
-
-        return true;
-    }
-
-    private void setURLs(WAQuery query) {
-        waUrl = query.toWebsiteURL();
-        waXmlUrl = engine.toURL(query);
     }
 
     private List<String> extractResults(WAQueryResult queryResult) {
@@ -136,8 +138,8 @@ public class WACalculator {
      *
      * @return Osoite.
      */
-    public String getWaUrl() {
-        return waUrl;
+    public String getResURL() {
+        return resURL;
     }
 
     /**
@@ -145,8 +147,8 @@ public class WACalculator {
      *
      * @return Osoite.
      */
-    public String getWaXmlUrl() {
-        return waXmlUrl;
+    public String getResXMLURL() {
+        return resXMLURL;
     }
 
     /**
@@ -156,5 +158,14 @@ public class WACalculator {
      */
     public void setAppID(String appID) {
         engine.setAppID(appID);
+    }
+
+    /**
+     * Palauttaa AppID:n.
+     *
+     * @return ApID.
+     */
+    public String getAppID() {
+        return engine.getAppID();
     }
 }

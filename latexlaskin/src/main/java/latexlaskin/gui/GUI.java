@@ -20,7 +20,7 @@ public class GUI {
 
     public GUI(Stage stage, Calculator calc) {
         this.stage = stage;
-        this.stage.setTitle("LaTeX-laskin");
+        this.stage.setTitle("LaTeXLaskin");
         calcScene = new CalcScene(stage, calc);
         loginScene = new LoginScene(stage, calc);
         calcScene.setOtherScene(loginScene);

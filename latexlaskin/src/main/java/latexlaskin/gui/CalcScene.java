@@ -9,7 +9,6 @@ import java.util.List;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import latexlaskin.calculator.Calculator;
@@ -36,15 +35,11 @@ public class CalcScene extends MyScene {
         gridPane.add(calcButton, 1, 2);
         gridPane.setHgap(10);
         gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setPadding(new Insets(15, 15, 15, 15));
         calcButton.setOnAction((event) -> {
             List<String> results = calc.query(inputField.getText());
             if (results == null) {
                 resultLabel.setText(calc.getError());
-                stage.sizeToScene();
-                return;
-            } else if (results.isEmpty()) {
-                resultLabel.setText("Ei tuettuja ratkaisuja");
                 stage.sizeToScene();
                 return;
             }
@@ -52,9 +47,9 @@ public class CalcScene extends MyScene {
             resultLabel.setText("Ratkaisut:");
             int i = 4;
             for (String result : results) {
-                TextArea textArea = new TextArea(result);
-                textArea.setEditable(false);
-                gridPane.add(textArea, 1, i);
+                TextField textField = new TextField(result);
+                textField.setEditable(false);
+                gridPane.add(textField, 1, i);
                 i++;
             }
             stage.sizeToScene();

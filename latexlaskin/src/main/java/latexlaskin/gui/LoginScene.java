@@ -34,7 +34,7 @@ public class LoginScene extends MyScene {
         gridPane.add(errorLabel, 1, 2);
         gridPane.setHgap(10);
         gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setPadding(new Insets(15, 15, 15, 15));
         button.setOnAction((event) -> {
             calc.setAppID(textField.getText());
             calc.query("1 + 1");

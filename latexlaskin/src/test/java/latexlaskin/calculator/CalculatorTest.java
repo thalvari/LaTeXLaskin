@@ -21,7 +21,7 @@ import org.junit.Test;
  */
 public class CalculatorTest {
 
-    private static final String APPID = "WJ628E-G3H5VTERP4";
+    private static final String APPID = "LE69JY-QUPK5KWVWV";
     private static final boolean DEBUG = false;
     private static final String FORMAT = "plaintext";
 
@@ -52,11 +52,13 @@ public class CalculatorTest {
         assertTrue(out.contains("http://www.wolframalpha.com/input/?i=%5Cint_0%"
                 + "5E1+2+%5Cpi+x"));
         assertTrue(out.contains("Ratkaisut XML-tiedostona:"));
-        assertTrue(out.contains("http://api.wolframalpha.com/v2/query?appid=WJ6"
-                + "28E-G3H5VTERP4&input=%5Cint_0%5E1+2+%5Cpi+x&format=plaintext"
-                + "&async=false&reinterpret=true"));
-        assertTrue(out.contains("Prosessoidut ratkaisut:"));
+        assertTrue(out.contains("http://api.wolframalpha.com/v2/query?appid="
+                + calc.getAppID() + "&input=%5Cint_0%5E1+2+%5Cpi+x&format=plain"
+                + "text&async=false&reinterpret=true"));
+        assertTrue(out.contains("Tuetut ratkaisut prosessoituina ja LaTeX-koodi"
+                + "na:"));
         assertTrue(out.contains("π"));
+        assertTrue(out.contains("\\pi"));
     }
 
     @Test
@@ -96,5 +98,11 @@ public class CalculatorTest {
                 + "\\mathrm{e}^{(2 x)} + 1)}");
         assertEquals(results.get(2), "\\frac{1}{(\\mathrm{e}^{(2 x)} + 1)} - "
                 + "\\frac{(\\mathrm{e}^{2} x)}{(\\mathrm{e}^{(2 x)} + 1)}");
+    }
+
+    @Test
+    public void testSetAppID() {
+        calc.setAppID("1");
+        assertEquals(calc.getAppID(), "1");
     }
 }

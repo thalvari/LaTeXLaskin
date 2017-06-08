@@ -41,16 +41,24 @@ public class Calculator {
      */
     public List<String> query(String input) {
         List<String> results = waCalc.query(input);
+        if (debug) {
+            printURLs();
+        }
+
         if (results == null) {
             return null;
         }
 
         results = process(results);
         if (debug) {
-            printDebug(results);
+            printResults(results);
         }
 
         results = convert(results);
+        if (debug) {
+            printResults(results);
+        }
+
         return results;
     }
 
@@ -66,12 +74,15 @@ public class Calculator {
         return results;
     }
 
-    private void printDebug(List<String> results) {
+    private void printURLs() {
         System.out.println("Ratkaisut WA:n sivuilla:");
-        System.out.println(waCalc.getWaUrl());
+        System.out.println(waCalc.getResURL());
         System.out.println("Ratkaisut XML-tiedostona:");
-        System.out.println(waCalc.getWaXmlUrl());
-        System.out.println("Prosessoidut ratkaisut:");
+        System.out.println(waCalc.getResXMLURL());
+        System.out.println("Tuetut ratkaisut prosessoituina ja LaTeX-koodina:");
+    }
+
+    private void printResults(List<String> results) {
         for (String result : results) {
             System.out.println(result);
         }
@@ -102,5 +113,14 @@ public class Calculator {
      */
     public void setAppID(String appID) {
         waCalc.setAppID(appID);
+    }
+
+    /**
+     * Palauttaa AppID:n.
+     *
+     * @return ApID.
+     */
+    public String getAppID() {
+        return waCalc.getAppID();
     }
 }
