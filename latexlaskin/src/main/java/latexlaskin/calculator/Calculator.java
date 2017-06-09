@@ -75,11 +75,9 @@ public class Calculator {
     }
 
     private void printURLs() {
-        System.out.println("Ratkaisut WA:n sivuilla:");
+        System.out.println("---");
         System.out.println(waCalc.getResURL());
-        System.out.println("Ratkaisut XML-tiedostona:");
         System.out.println(waCalc.getResXMLURL());
-        System.out.println("Tuetut ratkaisut prosessoituina ja LaTeX-koodina:");
     }
 
     private void printResults(List<String> results) {

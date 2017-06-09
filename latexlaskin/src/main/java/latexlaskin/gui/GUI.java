@@ -15,8 +15,8 @@ import latexlaskin.calculator.Calculator;
 public class GUI {
 
     private final Stage stage;
-    private LoginScene loginScene;
-    private CalcScene calcScene;
+    private final LoginScene loginScene;
+    private final CalcScene calcScene;
 
     public GUI(Stage stage, Calculator calc) {
         this.stage = stage;

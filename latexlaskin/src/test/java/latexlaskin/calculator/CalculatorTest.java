@@ -48,15 +48,12 @@ public class CalculatorTest {
         String input = "\\int_0^1 2 \\pi x";
         calc.query(input);
         String out = outStream.toString();
-        assertTrue(out.contains("Ratkaisut WA:n sivuilla:"));
+        assertTrue(out.contains("---"));
         assertTrue(out.contains("http://www.wolframalpha.com/input/?i=%5Cint_0%"
                 + "5E1+2+%5Cpi+x"));
-        assertTrue(out.contains("Ratkaisut XML-tiedostona:"));
         assertTrue(out.contains("http://api.wolframalpha.com/v2/query?appid="
                 + calc.getAppID() + "&input=%5Cint_0%5E1+2+%5Cpi+x&format=plain"
                 + "text&async=false&reinterpret=true"));
-        assertTrue(out.contains("Tuetut ratkaisut prosessoituina ja LaTeX-koodi"
-                + "na:"));
         assertTrue(out.contains("π"));
         assertTrue(out.contains("\\pi"));
     }

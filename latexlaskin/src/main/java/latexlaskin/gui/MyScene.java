@@ -5,6 +5,7 @@
  */
 package latexlaskin.gui;
 
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -18,13 +19,13 @@ public abstract class MyScene {
 
     protected final Stage stage;
     protected final Calculator calc;
-    protected final GridPane gridPane;
+    protected GridPane gridPane;
     protected MyScene otherScene;
 
     public MyScene(Stage stage, Calculator calc) {
         this.stage = stage;
         this.calc = calc;
-        gridPane = new GridPane();
+        constructGridPane();
         construct();
     }
 
@@ -37,4 +38,11 @@ public abstract class MyScene {
     }
 
     protected abstract void construct();
+
+    private void constructGridPane() {
+        gridPane = new GridPane();
+        gridPane.setHgap(20);
+        gridPane.setVgap(20);
+        gridPane.setPadding(new Insets(20, 20, 20, 20));
+    }
 }

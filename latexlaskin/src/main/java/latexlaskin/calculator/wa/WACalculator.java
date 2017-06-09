@@ -46,14 +46,14 @@ public class WACalculator {
      * @return Ratkaisut.
      */
     public List<String> query(String input) {
+        WAQuery query = createQuery(input);
+        WAQueryResult queryResult;
+        setURLs(query);
         if (input.isEmpty()) {
             error = "Tyhjä syöte.";
             return null;
         }
 
-        WAQuery query = createQuery(input);
-        WAQueryResult queryResult;
-        setURLs(query);
         try {
             queryResult = engine.performQuery(query);
         } catch (WAException e) {

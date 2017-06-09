@@ -5,7 +5,7 @@
  */
 package latexlaskin.gui;
 
-import javafx.geometry.Insets;
+import javafx.event.Event;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -18,31 +18,40 @@ import latexlaskin.calculator.Calculator;
  */
 public class LoginScene extends MyScene {
 
+    private TextField appIDTextField;
+    private Button loginButton;
+    private Button clearButton;
+    private Label errorLabel;
+
     public LoginScene(Stage stage, Calculator calc) {
         super(stage, calc);
     }
 
     @Override
     protected void construct() {
-        Label label = new Label("AppID: ");
-        TextField textField = new TextField();
-        Button button = new Button("Kirjaudu");
-        Label errorLabel = new Label();
-        gridPane.add(label, 0, 0);
-        gridPane.add(textField, 1, 0);
-        gridPane.add(button, 1, 1);
-        gridPane.add(errorLabel, 1, 2);
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(15, 15, 15, 15));
-        button.setOnAction((event) -> {
-            calc.setAppID(textField.getText());
-            calc.query("1 + 1");
-            if (calc.getError() == null) {
-                stage.setScene(otherScene.getScene());
-            } else {
-                errorLabel.setText(calc.getError());
-            }
+        appIDTextField = new TextField();
+        appIDTextField.setPromptText("AppID");
+        loginButton = new Button("Kirjaudu");
+        clearButton = new Button("Tyhjennä");
+        errorLabel = new Label();
+        gridPane.add(appIDTextField, 0, 0);
+        gridPane.add(loginButton, 1, 0);
+        gridPane.add(clearButton, 2, 0);
+        gridPane.add(errorLabel, 0, 1, 3, 1);
+        loginButton.setOnAction(this::loginButtonHandle);
+        clearButton.setOnAction((event) -> {
+            appIDTextField.clear();
         });
+    }
+
+    private void loginButtonHandle(Event event) {
+        calc.setAppID(appIDTextField.getText());
+        calc.query("1 + 1");
+        if (calc.getError() == null) {
+            stage.setScene(otherScene.getScene());
+        } else {
+            errorLabel.setText(calc.getError());
+        }
+        stage.sizeToScene();
     }
 }
