@@ -60,6 +60,10 @@ public class LaTeXConverter {
                 revResult += ')';
             } else if (result.charAt(i) == ')') {
                 revResult += '(';
+            } else if (result.charAt(i) == '{') {
+                revResult += '}';
+            } else if (result.charAt(i) == '}') {
+                revResult += '{';
             } else {
                 revResult += result.charAt(i);
             }
@@ -76,31 +80,49 @@ public class LaTeXConverter {
     }
 
     private static int calcEndIdxPar(String result, String key, int idx) {
-        int endIdx = idx + LaTeXDict.getRealKeyLength(key) - 1;
+        int endIdx = idx + LaTeXDict.getRealKeyLength(key);
         int level = 1;
         while (level > 0) {
             endIdx++;
-            if (result.charAt(endIdx + 1) == '(') {
+            if (result.charAt(endIdx) == '(') {
                 level++;
-            } else if (result.charAt(endIdx + 1) == ')') {
+            } else if (result.charAt(endIdx) == ')') {
                 level--;
             }
         }
 
-        return endIdx + 1;
+        return calcEndIdxCont(result, endIdx);
+    }
+
+    private static int calcEndIdxCont(String result, int idx) {
+        if (idx + 1 == result.length()) {
+            return idx;
+        }
+
+        if (result.charAt(idx + 1) == '(' || result.charAt(idx + 1) == '{') {
+            return calcEndIdxPar(result, " ", idx);
+        } else if (result.charAt(idx + 1) == '^') {
+            return calcEndIdx(result, "^", idx + 1);
+        } else {
+            return idx;
+        }
     }
 
     private static int calcEndIdxNoPar(String result, String key, int idx) {
         int endIdx = idx + LaTeXDict.getRealKeyLength(key) - 1;
         while (endIdx < result.length() - 1
+                && result.charAt(endIdx + 1) != '^'
                 && result.charAt(endIdx + 1) != ' '
+                && result.charAt(endIdx + 1) != '-'
                 && result.charAt(endIdx + 1) != ')'
-                && result.charAt(endIdx + 1) != '}') {
+                && result.charAt(endIdx + 1) != '('
+                && result.charAt(endIdx + 1) != '}'
+                && result.charAt(endIdx + 1) != '{') {
 
             endIdx++;
         }
 
-        return endIdx;
+        return calcEndIdxCont(result, endIdx);
     }
 
     private static String constructResultFrac(String result, int idx,

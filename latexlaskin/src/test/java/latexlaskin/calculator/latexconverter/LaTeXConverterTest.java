@@ -17,9 +17,6 @@ import org.junit.Test;
  */
 public class LaTeXConverterTest {
 
-    private static final char IMAGINARY = 63310;
-    private static final char NEPER = 63309;
-
     @Test
     public void testLaTeXConverter() {
         LaTeXConverter conv = new LaTeXConverter();
@@ -62,9 +59,35 @@ public class LaTeXConverterTest {
     }
 
     @Test
+    public void testReplaceSlashes5() {
+        List<String> results = new ArrayList();
+        results.add("^(- x)/2 + ^( x)/2");
+        LaTeXConverter.replaceSlashes(results);
+        assertEquals(results.get(0), "\\frac{^(- x)}{2} + \\frac{^( x)}{2}"
+                + "");
+    }
+
+    @Test
+    public void testReplaceSlashes6() {
+        List<String> results = new ArrayList();
+        results.add("^(-(x - μ)^2/(2 σ^2))/(sqrt(2 π) σ)");
+        LaTeXConverter.replaceSlashes(results);
+        assertEquals(results.get(0), "\\frac{^(-\\frac{(x - μ)^2}{(2 σ^2)})}{("
+                + "sqrt(2 π) σ)}");
+    }
+
+    @Test
+    public void testReplaceSlashes7() {
+        List<String> results = new ArrayList();
+        results.add("^(-x^2/2)/sqrt(2 π)");
+        LaTeXConverter.replaceSlashes(results);
+        assertEquals(results.get(0), "\\frac{^(-\\frac{x^2}{2})}{sqrt(2 π)}");
+    }
+
+    @Test
     public void testReplace() {
         List<String> results = new ArrayList();
-        results.add(NEPER + "^2");
+        results.add("^2");
         LaTeXConverter.replace(results);
         assertEquals(results.get(0), "\\mathrm{e}^{2}");
     }
@@ -96,8 +119,7 @@ public class LaTeXConverterTest {
     @Test
     public void testReplace5() {
         List<String> results = new ArrayList();
-        results.add(IMAGINARY + " " + NEPER + "^(-" + IMAGINARY + " x) - "
-                + IMAGINARY + " " + NEPER + "^(" + IMAGINARY + " x)");
+        results.add(" ^(- x) -  ^( x)");
         LaTeXConverter.replace(results);
         assertEquals(results.get(0), "\\mathrm{i} \\mathrm{e}^{(-\\mathrm{i} x)"
                 + "} - \\mathrm{i} \\mathrm{e}^{(\\mathrm{i} x)}");

@@ -16,14 +16,12 @@ import java.util.Set;
  */
 public class LaTeXDict {
 
-    private static final char IMAGINARY = 63310;
-    private static final char NEPER = 63309;
     private static final Map<String, LaTeXDictItem> DICTIONARY;
 
     static {
         DICTIONARY = new HashMap();
-        DICTIONARY.put("" + IMAGINARY, new LaTeXDictItem("\\mathrm{i}"));
-        DICTIONARY.put("" + NEPER, new LaTeXDictItem("\\mathrm{e}"));
+        DICTIONARY.put("", new LaTeXDictItem("\\mathrm{i}"));
+        DICTIONARY.put("", new LaTeXDictItem("\\mathrm{e}"));
         DICTIONARY.put("π", new LaTeXDictItem("\\pi"));
         DICTIONARY.put("cos(", new LaTeXDictItem("\\cos"));
         DICTIONARY.put("cosh(", new LaTeXDictItem("\\cosh"));

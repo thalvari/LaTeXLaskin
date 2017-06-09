@@ -18,9 +18,6 @@ import org.junit.Test;
  */
 public class WAResultProcesserTest {
 
-    private static final char EQUALS = 63449;
-    private static final char IMAGINARY = 63310;
-
     @Test
     public void testWAResultProcesser() {
         WAResultProcesser processer = new WAResultProcesser();
@@ -30,7 +27,7 @@ public class WAResultProcesserTest {
     @Test
     public void testTrimResults() {
         List<String> results = new ArrayList();
-        results.add("∫_0^1 2 π xx" + EQUALS + "π≈3.1416");
+        results.add("∫_0^1 2 π xxπ≈3.1416");
         WAResultProcesser.trimResults(results);
         assertEquals(results.get(0), "π");
     }
@@ -38,8 +35,7 @@ public class WAResultProcesserTest {
     @Test
     public void testemoveBadResults() {
         List<String> results = new ArrayList();
-        results.add("1/2  (for x≠-2 " + IMAGINARY + " and x≠2 " + IMAGINARY
-                + ")");
+        results.add("1/2  (for x≠-2  and x≠2 )");
         results = WAResultProcesser.removeBadResults(results);
         assertTrue(results.isEmpty());
     }

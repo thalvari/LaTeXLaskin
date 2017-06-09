@@ -70,6 +70,10 @@ public class Calculator {
 
     private List<String> convert(List<String> results) {
         LaTeXConverter.replaceSlashes(results);
+        if (debug) {
+            printResults(results);
+        }
+
         LaTeXConverter.replace(results);
         return results;
     }

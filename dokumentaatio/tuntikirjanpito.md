@@ -12,4 +12,5 @@ Päivä | Tunnit | Kuvaus
 05.06.2017 | 3h | Konvertterille uusia ominaisuuksia ja lisää testejä.
 06.06.2017 | 2h | Konvertterille uusia ominaisuuksia, lisää testejä ja dokumentaatiota.
 08.06.2017 | 2h | Käyttöliittymän tekoa.
+09.06.2017 | 1h | Muokattu konvertteria.
 ... | ... | ...

@@ -15,8 +15,6 @@ import java.util.List;
  */
 public class WAResultProcesser {
 
-    private static final char EQUALS = 63449;
-
     /**
      * Tyhjä konstruktori.
      */
@@ -58,7 +56,7 @@ public class WAResultProcesser {
     }
 
     private static String trimResultEquals(String result) {
-        int idx = result.indexOf(EQUALS);
+        int idx = result.indexOf('');
         if (idx != -1) {
             result = result.substring(idx + 1);
         }

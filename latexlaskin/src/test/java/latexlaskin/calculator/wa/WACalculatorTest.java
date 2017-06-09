@@ -19,7 +19,6 @@ public class WACalculatorTest {
 
     private static final String APPID = "LE69JY-QUPK5KWVWV";
     private static final String FORMAT = "plaintext";
-    private static final char EQUALS = 63449;
 
     private WACalculator waCalc;
 
@@ -74,7 +73,7 @@ public class WACalculatorTest {
     public void testQuery6() {
         String input = "\\sum_{i=0}^n i";
         List<String> results = waCalc.query(input);
-        assertEquals(results.get(0), "∑_(i=0)^n i" + EQUALS + "1/2 n (n + 1)");
+        assertEquals(results.get(0), "∑_(i=0)^n i1/2 n (n + 1)");
         assertEquals(results.get(1), "1/8 (2 n + 1)^2 - 1/8");
         assertEquals(results.get(2), "(n/2 + 1/2) n");
         assertEquals(results.get(3), "n^2/2 + n/2");
@@ -84,6 +83,6 @@ public class WACalculatorTest {
     public void testQuery7() {
         String input = "d/dx 2x";
         List<String> results = waCalc.query(input);
-        assertEquals(results.get(0), "d/dx(2 x)" + EQUALS + "2");
+        assertEquals(results.get(0), "d/dx(2 x)2");
     }
 }
