@@ -8,6 +8,7 @@ package latexlaskin.calculator;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
+import latexlaskin.gui.Main;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -21,15 +22,11 @@ import org.junit.Test;
  */
 public class CalculatorTest {
 
-    private static final String APPID = "LE69JY-QUPK5KWVWV";
-    private static final boolean DEBUG = false;
-    private static final String FORMAT = "plaintext";
-
     private Calculator calc;
 
     @Before
     public void setUp() {
-        calc = new Calculator(APPID, DEBUG, FORMAT);
+        calc = new Calculator(Main.APPID, false, Main.FORMAT);
     }
 
     @Test
@@ -45,17 +42,18 @@ public class CalculatorTest {
         calc.setDebug(true);
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outStream));
-        String input = "\\int_0^1 2 \\pi x";
+        String input = "\\int_0^1 2 \\pi x / 2";
         calc.query(input);
         String out = outStream.toString();
         assertTrue(out.contains("---"));
         assertTrue(out.contains("http://www.wolframalpha.com/input/?i=%5Cint_0%"
-                + "5E1+2+%5Cpi+x"));
+                + "5E1+2+%5Cpi+x+%2F+2"));
         assertTrue(out.contains("http://api.wolframalpha.com/v2/query?appid="
-                + calc.getAppID() + "&input=%5Cint_0%5E1+2+%5Cpi+x&format=plain"
-                + "text&async=false&reinterpret=true"));
-        assertTrue(out.contains("π"));
-        assertTrue(out.contains("\\pi"));
+                + calc.getAppID() + "&input=%5Cint_0%5E1+2+%5Cpi+x+%2F+2&format"
+                + "=plaintext&async=false&reinterpret=true"));
+        assertTrue(out.contains("π/2"));
+        assertTrue(out.contains("\\frac{π}{2}"));
+        assertTrue(out.contains("\\frac{\\pi}{2}"));
     }
 
     @Test

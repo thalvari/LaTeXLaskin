@@ -15,8 +15,8 @@ import latexlaskin.calculator.Calculator;
  */
 public class Main extends Application {
 
-    private static final String APPID = "LE69JY-QUPK5KWVWV";
-    private static final String FORMAT = "plaintext";
+    public static final String APPID = "LE69JY-QUPK5KWVWV";
+    public static final String FORMAT = "plaintext";
     private static boolean DEBUG = false;
 
     public static void main(String[] args) {

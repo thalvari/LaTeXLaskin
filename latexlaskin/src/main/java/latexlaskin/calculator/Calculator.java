@@ -50,15 +50,7 @@ public class Calculator {
         }
 
         results = process(results);
-        if (debug) {
-            printResults(results);
-        }
-
         results = convert(results);
-        if (debug) {
-            printResults(results);
-        }
-
         return results;
     }
 
@@ -69,12 +61,20 @@ public class Calculator {
     }
 
     private List<String> convert(List<String> results) {
+        if (debug) {
+            printResults(results);
+        }
+
         LaTeXConverter.replaceSlashes(results);
         if (debug) {
             printResults(results);
         }
 
         LaTeXConverter.replace(results);
+        if (debug) {
+            printResults(results);
+        }
+
         return results;
     }
 

@@ -6,6 +6,7 @@
 package latexlaskin.calculator.wa;
 
 import java.util.List;
+import latexlaskin.gui.Main;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import org.junit.Before;
@@ -17,19 +18,16 @@ import org.junit.Test;
  */
 public class WACalculatorTest {
 
-    private static final String APPID = "LE69JY-QUPK5KWVWV";
-    private static final String FORMAT = "plaintext";
-
     private WACalculator waCalc;
 
     @Before
     public void setUp() {
-        waCalc = new WACalculator(APPID, FORMAT);
+        waCalc = new WACalculator(Main.APPID, Main.FORMAT);
     }
 
     @Test
     public void testQuery() {
-        waCalc.setAppID(APPID + "1");
+        waCalc.setAppID(Main.APPID + "1");
         String input = "1+1";
         List<String> results = waCalc.query(input);
         assertNull(results);
