@@ -33,7 +33,7 @@ public class LaTeXDictTest {
 
     @Test
     public void testGetKeys() {
-        assertEquals(LaTeXDict.getKeys().size(), 12);
+        assertEquals(LaTeXDict.getKeys().size(), 27);
     }
 
     @Test

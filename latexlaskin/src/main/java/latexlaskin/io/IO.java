@@ -35,8 +35,8 @@ public class IO {
     public static String readAppID(File file) {
         List<String> lines = new ArrayList();
         try {
-            Files.lines(Paths.get(file.getName())).forEach(rivi ->
-                    lines.add(rivi));
+            Files.lines(Paths.get(file.getName())).forEach(line
+                    -> lines.add(line));
         } catch (IOException e) {
         }
 
@@ -52,18 +52,14 @@ public class IO {
      *
      * @param file Tiedosto.
      * @param appID AppID.
-     * @return TotuusArvo.
      */
-    public static boolean writeAppID(File file, String appID) {
+    public static void writeAppID(File file, String appID) {
         List<String> lines = new ArrayList();
         lines.add(appID);
         try {
             Files.write(Paths.get(file.getName()), lines,
                     StandardCharsets.UTF_8);
         } catch (IOException e) {
-            return false;
         }
-
-        return true;
     }
 }

@@ -98,12 +98,12 @@ public class LaTeXConverter {
     private static int calcEndIdxNoPar(String result, int keyLen, int idx) {
         int endIdx = idx + keyLen - 1;
         while (endIdx < result.length() - 1
-                && result.charAt(endIdx + 1) != ' '
-                && result.charAt(endIdx + 1) != '-'
-                && result.charAt(endIdx + 1) != ')'
-                && result.charAt(endIdx + 1) != '}') {
+                && !isBreakChar(result, endIdx + 1)) {
 
-            if (result.charAt(endIdx + 1) == '(') {
+            if (result.charAt(endIdx + 1) == '('
+                    && result.charAt(endIdx) == ')') {
+                break;
+            } else if (result.charAt(endIdx + 1) == '(') {
                 return calcEndIdxPar(result, 1, endIdx);
             }
 
@@ -111,6 +111,13 @@ public class LaTeXConverter {
         }
 
         return endIdx;
+    }
+
+    private static boolean isBreakChar(String result, int idx) {
+        return result.charAt(idx) == ' '
+                || result.charAt(idx) == '-'
+                || result.charAt(idx) == ')'
+                || result.charAt(idx) == '}';
     }
 
     private static String constructResultFrac(String result, int idx,
