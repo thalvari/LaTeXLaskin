@@ -35,8 +35,8 @@ public class IO {
     public static String readAppID(File file) {
         List<String> lines = new ArrayList();
         try {
-            Files.lines(Paths.get(file.getName())).forEach(line
-                    -> lines.add(line));
+            Files.lines(Paths.get(file.getName())).forEach(line ->
+                    lines.add(line));
         } catch (IOException e) {
         }
 

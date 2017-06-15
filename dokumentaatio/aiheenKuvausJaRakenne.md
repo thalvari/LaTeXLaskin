@@ -1,9 +1,18 @@
-# Aiheen kuvaus ja rakenne
-### Kuvaus
+# Aihemäärittely
+### Aihe
 Kyseessä on käyttöliittymän avulla toimiva symbolinen laskin, joka hyödyntää
 Wolfram Alphan [Full Results API](https://products.wolframalpha.com/api/explorer/)
--rajapintaa, antaa käyttäjälle vaihtoehtoisia ratkaisuja LaTeX-koodina, sekä
-mahdollisen kuvaajan helposti liitettävänä kuvatiedostona. Mahdollisuuksien
-mukaan helpoimpien laskujen ratkaiseminen pyritään toteuttamaan itse.
-### Rakenne
-![Luokkakaavio](67a337d2.png)
+-rajapintaa ja tarjoaa käyttäjälle tukemansa ratkaisut tyyliteltynä LaTeX-koodina.
+### Käyttäjät
+Kuka tahansa. Pitää olla Wolframin AppID.
+### Käyttäjien toiminnot
+- Laskun syöttäminen sille varattuun kenttään.
+- Kentän tyhjentäminen nappia painamalla.
+- Tuettujen ratkaisujen esittäminen nappia painamalla.
+- LaTeX-muotoisen vastauksen kopioiminen nappia painamalla.
+- AppID:n vaihtaminen omassa näkymässään.
+# Luokkakaavio
+![Luokkakaavio](luokkakaavio.png)
+# Käyttötapauksia
+![Käyttötapaus 1](sekvenssikaavio_1.png)
+![Käyttötapaus 2](sekvenssikaavio_2.png)

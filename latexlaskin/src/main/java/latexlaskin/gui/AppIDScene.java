@@ -7,7 +7,6 @@ package latexlaskin.gui;
 
 import java.io.File;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -53,7 +52,7 @@ public class AppIDScene extends MyScene {
         appIDPasswordField.clear();
     }
 
-    private void replaceButtonHandle(Event event) {
+    private void replaceButtonHandle(ActionEvent event) {
         String oldAppID = calc.getAppID();
         String newAppID = appIDPasswordField.getText();
         calc.setAppID(newAppID);
