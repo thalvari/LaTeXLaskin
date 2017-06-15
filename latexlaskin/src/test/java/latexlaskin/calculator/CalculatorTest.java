@@ -8,7 +8,6 @@ package latexlaskin.calculator;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
-import latexlaskin.gui.Main;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -26,7 +25,7 @@ public class CalculatorTest {
 
     @Before
     public void setUp() {
-        calc = new Calculator(Main.APPID, false, Main.FORMAT);
+        calc = new Calculator(false);
     }
 
     @Test

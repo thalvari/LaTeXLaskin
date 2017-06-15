@@ -17,6 +17,7 @@ import java.util.Set;
 public class WASupported {
 
     private static final Set<String> SUPPORTED_POD_IDS;
+    private static final Set<String> SUPPORTED_EXCLUSIVE_POD_TITLES;
     private static final Set<String> SUPPORTED_FIRST_POD_TITLES;
 
     static {
@@ -24,8 +25,11 @@ public class WASupported {
         SUPPORTED_POD_IDS.add("Result");
         SUPPORTED_POD_IDS.add("AlternateForm");
         SUPPORTED_POD_IDS.add("ExpandedForm");
-        SUPPORTED_POD_IDS.add("DecimalApproximation");
         SUPPORTED_POD_IDS.add("AlternateFormAssumingAllVariablesAreReal");
+
+        SUPPORTED_EXCLUSIVE_POD_TITLES = new HashSet();
+        SUPPORTED_EXCLUSIVE_POD_TITLES.add("Solution");
+        SUPPORTED_EXCLUSIVE_POD_TITLES.add("Solutions");
 
         SUPPORTED_FIRST_POD_TITLES = new HashSet();
         SUPPORTED_FIRST_POD_TITLES.add("Derivative");
@@ -56,5 +60,15 @@ public class WASupported {
     private static boolean isSupportedByTitle(WAPod pod) {
         return SUPPORTED_FIRST_POD_TITLES.contains(pod.getTitle())
                 && pod.getPosition() == 100;
+    }
+
+    /**
+     * Kertoo onko podi eksklusiivisesti tuettu.
+     *
+     * @param pod Podi.
+     * @return Totuusarvo.
+     */
+    public static boolean isExclusivelySupported(WAPod pod) {
+        return SUPPORTED_EXCLUSIVE_POD_TITLES.contains(pod.getTitle());
     }
 }

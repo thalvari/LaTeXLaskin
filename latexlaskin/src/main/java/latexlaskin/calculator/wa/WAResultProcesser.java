@@ -6,7 +6,9 @@
 package latexlaskin.calculator.wa;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Metodeja API:lta saatujen ratkaisujen prosessoimiseksi.
@@ -14,6 +16,19 @@ import java.util.List;
  * @author thalvari
  */
 public class WAResultProcesser {
+
+    private static final Set<String> TRIM_START;
+    private static final Set<String> TRIM_END;
+
+    static {
+        TRIM_START = new HashSet();
+        TRIM_START.add("");
+
+        TRIM_END = new HashSet();
+        TRIM_END.add(",");
+        TRIM_END.add("≈");
+        TRIM_END.add("onstant");
+    }
 
     /**
      * Tyhjä konstruktori.
@@ -50,24 +65,28 @@ public class WAResultProcesser {
     }
 
     private static String trimResult(String result) {
-        result = trimResultEquals(result);
-        result = trimResultApprox(result);
+        result = trimStart(result);
+        result = trimEnd(result);
         return result;
     }
 
-    private static String trimResultEquals(String result) {
-        int idx = result.indexOf('');
-        if (idx != -1) {
-            result = result.substring(idx + 1);
+    private static String trimStart(String result) {
+        for (String s : TRIM_START) {
+            int idx = result.indexOf(s);
+            if (idx != -1) {
+                result = result.substring(idx + 1);
+            }
         }
 
         return result;
     }
 
-    private static String trimResultApprox(String result) {
-        int idx = result.indexOf('≈');
-        if (idx != -1) {
-            result = result.substring(0, idx);
+    private static String trimEnd(String result) {
+        for (String s : TRIM_END) {
+            int idx = result.indexOf(s);
+            if (idx != -1) {
+                result = result.substring(0, idx);
+            }
         }
 
         return result;

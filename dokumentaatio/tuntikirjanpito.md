@@ -13,4 +13,5 @@ Päivä | Tunnit | Kuvaus
 06.06.2017 | 2h | Konvertterille uusia ominaisuuksia, lisää testejä ja dokumentaatiota.
 08.06.2017 | 2h | Käyttöliittymän tekoa.
 09.06.2017 | 1h | Muokattu konvertteria.
+14.06.2017 | 2h | AppID tiedostoon ja lisää tuettuja ratkaisuja.
 ... | ... | ...

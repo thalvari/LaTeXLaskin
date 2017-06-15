@@ -19,6 +19,7 @@ public abstract class MyScene {
 
     protected final Stage stage;
     protected final Calculator calc;
+    protected final Scene scene;
     protected GridPane gridPane;
     protected MyScene otherScene;
 
@@ -26,6 +27,7 @@ public abstract class MyScene {
         this.stage = stage;
         this.calc = calc;
         constructGridPane();
+        scene = new Scene(gridPane);
         construct();
     }
 
@@ -34,7 +36,7 @@ public abstract class MyScene {
     }
 
     public Scene getScene() {
-        return new Scene(gridPane);
+        return scene;
     }
 
     protected abstract void construct();

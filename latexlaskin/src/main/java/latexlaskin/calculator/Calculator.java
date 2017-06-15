@@ -23,12 +23,10 @@ public class Calculator {
     /**
      * Konstruktori.
      *
-     * @param appid Käyttäjän AppID.
      * @param debug Debug-tila.
-     * @param format API:n palauttamat formaatit.
      */
-    public Calculator(String appid, boolean debug, String format) {
-        waCalc = new WACalculator(appid, format);
+    public Calculator(boolean debug) {
+        waCalc = new WACalculator();
         this.debug = debug;
     }
 

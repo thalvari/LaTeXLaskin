@@ -12,8 +12,10 @@ import com.wolfram.alpha.WAPod;
 import com.wolfram.alpha.WAQuery;
 import com.wolfram.alpha.WAQueryResult;
 import com.wolfram.alpha.WASubpod;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import latexlaskin.io.IO;
 
 /**
  * API:a hyödyntävä laskin.
@@ -30,13 +32,11 @@ public class WACalculator {
     /**
      * Konstruktori.
      *
-     * @param appid Käyttäjän AppID.
-     * @param format API:n palauttamat formaatit.
      */
-    public WACalculator(String appid, String format) {
+    public WACalculator() {
         engine = new WAEngine();
-        engine.setAppID(appid);
-        engine.addFormat(format);
+        engine.setAppID(IO.readAppID(new File("APPID")));
+        engine.addFormat("plaintext");
     }
 
     /**
@@ -105,7 +105,11 @@ public class WACalculator {
     private List<String> extractResults(WAQueryResult queryResult) {
         List<String> results = new ArrayList();
         for (WAPod pod : queryResult.getPods()) {
-            if (WASupported.isSupported(pod)) {
+            if (WASupported.isExclusivelySupported(pod)) {
+                results.clear();
+                results.addAll(extractResults(pod));
+                return results;
+            } else if (WASupported.isSupported(pod)) {
                 results.addAll(extractResults(pod));
             }
         }

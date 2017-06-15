@@ -33,6 +33,14 @@ public class WAResultProcesserTest {
     }
 
     @Test
+    public void testTrimResults2() {
+        List<String> results = new ArrayList();
+        results.add("1/2 (4 π n + π),   n∈");
+        WAResultProcesser.trimResults(results);
+        assertEquals(results.get(0), "1/2 (4 π n + π)");
+    }
+
+    @Test
     public void testemoveBadResults() {
         List<String> results = new ArrayList();
         results.add("1/2  (for x≠-2  and x≠2 )");

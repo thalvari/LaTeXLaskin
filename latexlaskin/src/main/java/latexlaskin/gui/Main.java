@@ -15,23 +15,22 @@ import latexlaskin.calculator.Calculator;
  */
 public class Main extends Application {
 
-    public static final String APPID = "LE69JY-QUPK5KWVWV";
-    public static final String FORMAT = "plaintext";
     private static boolean DEBUG = false;
 
     public static void main(String[] args) {
         if (args.length == 1 && args[0].equals("--debug")) {
             DEBUG = true;
         }
+
         launch(Main.class);
     }
 
     @Override
     public void start(Stage stage) {
-        new GUI(stage, new Calculator(APPID, DEBUG, FORMAT)).start();
+        new GUI(stage, new Calculator(DEBUG)).start();
     }
 
     @Override
-    public void stop() throws Exception {
+    public void stop() {
     }
 }

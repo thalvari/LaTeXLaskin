@@ -15,20 +15,20 @@ import latexlaskin.calculator.Calculator;
 public class GUI {
 
     private final Stage stage;
-    private final LoginScene loginScene;
+    private final AppIDScene loginScene;
     private final CalcScene calcScene;
 
     public GUI(Stage stage, Calculator calc) {
         this.stage = stage;
         this.stage.setTitle("LaTeXLaskin");
         calcScene = new CalcScene(stage, calc);
-        loginScene = new LoginScene(stage, calc);
+        loginScene = new AppIDScene(stage, calc);
         calcScene.setOtherScene(loginScene);
         loginScene.setOtherScene(calcScene);
     }
 
     public void start() {
-        stage.setScene(loginScene.getScene());
+        stage.setScene(calcScene.getScene());
         stage.show();
     }
 }

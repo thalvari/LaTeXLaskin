@@ -103,9 +103,7 @@ public class LaTeXConverter {
                 && result.charAt(endIdx + 1) != ')'
                 && result.charAt(endIdx + 1) != '}') {
 
-            if (result.charAt(endIdx + 1) == '('
-                    || result.charAt(endIdx + 1) == '{') {
-
+            if (result.charAt(endIdx + 1) == '(') {
                 return calcEndIdxPar(result, 1, endIdx);
             }
 
