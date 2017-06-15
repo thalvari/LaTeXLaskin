@@ -90,4 +90,12 @@ public class WACalculatorTest {
         assertEquals(results.get(0), "x-3");
         assertEquals(results.get(1), "x3");
     }
+
+    @Test
+    public void testQuery9() {
+        String input = "lolcatt";
+        List<String> results = waCalc.query(input);
+        assertNull(results);
+        assertEquals(waCalc.getError(), "Syöte virheellinen.");
+    }
 }

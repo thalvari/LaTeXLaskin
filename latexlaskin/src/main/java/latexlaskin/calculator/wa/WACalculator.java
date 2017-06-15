@@ -90,7 +90,8 @@ public class WACalculator {
         if (queryResult.isError()) {
             error = "AppID virheellinen.";
             return false;
-        } else if (!queryResult.isSuccess()) {
+        } else if (!queryResult.isSuccess()
+                || queryResult.getWarnings().length != 0) {
             error = "Syöte virheellinen.";
             return false;
         } else if (results.isEmpty()) {
