@@ -130,6 +130,14 @@ public class LaTeXConverterTest {
         List<String> results = new ArrayList();
         results.add("\\frac{1}{2} (π - 2 sin^(-1)(x))");
         LaTeXConverter.replace(results);
-        assertEquals(results.get(0), "\\frac{1}{2} (\\pi - 2 sin^{(-1)}(x))");
+        assertEquals(results.get(0), "\\frac{1}{2} (\\pi - 2 \\sin^{(-1)}(x))");
+    }
+
+    @Test
+    public void testReplace7() {
+        List<String> results = new ArrayList();
+        results.add("sin^2(x)");
+        LaTeXConverter.replace(results);
+        assertEquals(results.get(0), "\\sin^{2}(x)");
     }
 }

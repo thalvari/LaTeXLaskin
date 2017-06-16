@@ -101,7 +101,8 @@ public class LaTeXConverter {
                 && !isBreakChar(result, endIdx + 1)) {
 
             if (result.charAt(endIdx + 1) == '('
-                    && result.charAt(endIdx) == ')') {
+                    && (result.charAt(endIdx) == ')'
+                    || Character.isDigit(result.charAt(endIdx)))) {
                 break;
             } else if (result.charAt(endIdx + 1) == '(') {
                 return calcEndIdxPar(result, 1, endIdx);
