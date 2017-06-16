@@ -72,14 +72,6 @@ public class LaTeXConverter {
         return revResult;
     }
 
-    private static int calcEndIdx(String result, int keyLen, int idx) {
-        if (result.charAt(idx + keyLen) == '(') {
-            return calcEndIdxPar(result, keyLen, idx);
-        } else {
-            return calcEndIdxNoPar(result, keyLen, idx);
-        }
-    }
-
     private static int calcEndIdxPar(String result, int keyLen, int idx) {
         int endIdx = idx + keyLen;
         int level = 1;
@@ -92,20 +84,26 @@ public class LaTeXConverter {
             }
         }
 
-        return calcEndIdxNoPar(result, 1, endIdx);
+        return endIdx;
     }
 
-    private static int calcEndIdxNoPar(String result, int keyLen, int idx) {
+    private static int calcEndIdx(String result, int keyLen, int idx) {
         int endIdx = idx + keyLen - 1;
-        while (endIdx < result.length() - 1
-                && !isBreakChar(result, endIdx + 1)) {
+        boolean isExp = false;
+        while (endIdx < result.length() - 1) {
+            char curChar = result.charAt(endIdx);
+            char nextChar = result.charAt(endIdx + 1);
+            if (curChar == '^') {
+                isExp = true;
+            }
 
-            if (result.charAt(endIdx + 1) == '('
-                    && (result.charAt(endIdx) == ')'
-                    || Character.isDigit(result.charAt(endIdx)))) {
+            if (isBreakChar(nextChar)
+                    || (isExp && curChar != '^' && nextChar == '(')) {
+
                 break;
-            } else if (result.charAt(endIdx + 1) == '(') {
-                return calcEndIdxPar(result, 1, endIdx);
+            } else if (nextChar == '(') {
+                endIdx = calcEndIdxPar(result, 1, endIdx);
+                continue;
             }
 
             endIdx++;
@@ -114,11 +112,8 @@ public class LaTeXConverter {
         return endIdx;
     }
 
-    private static boolean isBreakChar(String result, int idx) {
-        return result.charAt(idx) == ' '
-                || result.charAt(idx) == '-'
-                || result.charAt(idx) == ')'
-                || result.charAt(idx) == '}';
+    private static boolean isBreakChar(char c) {
+        return c == ' ' || c == '-' || c == ')' || c == '}';
     }
 
     private static String constructResultFrac(String result, int idx,
