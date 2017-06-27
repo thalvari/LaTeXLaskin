@@ -140,4 +140,24 @@ public class LaTeXConverterTest {
         LaTeXConverter.replace(results);
         assertEquals(results.get(0), "\\sin^{2}(x)");
     }
+
+    @Test
+    public void testRemoveExtraPars() {
+        List<String> results = new ArrayList();
+        results.add("\\frac{(\\mathrm{i} (\\mathrm{e}^{(-\\mathrm{i} x)} - "
+                + "\\mathrm{e}^{(\\mathrm{i} x)}))}{(\\mathrm{e}^{(-\\mathrm{i}"
+                + " x)} + \\mathrm{e}^{(\\mathrm{i} x)})}");
+        LaTeXConverter.removeExtraPars(results);
+        assertEquals(results.get(0), "\\frac{\\mathrm{i} (\\mathrm{e}^{-"
+                + "\\mathrm{i} x} - \\mathrm{e}^{\\mathrm{i} x})}{\\mathrm{e}^"
+                + "{-\\mathrm{i} x} + \\mathrm{e}^{\\mathrm{i} x}}");
+    }
+
+    @Test
+    public void testRemoveExtraPars2() {
+        List<String> results = new ArrayList();
+        results.add("\\frac{(x + 1)^{2}}{(x + 2)^{2}}");
+        LaTeXConverter.removeExtraPars(results);
+        assertEquals(results.get(0), "\\frac{(x + 1)^{2}}{(x + 2)^{2}}");
+    }
 }

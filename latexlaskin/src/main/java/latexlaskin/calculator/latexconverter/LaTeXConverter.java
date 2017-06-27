@@ -193,4 +193,37 @@ public class LaTeXConverter {
 
         return result.indexOf(key, idx + item.getTag().length());
     }
+
+    /**
+     * Poistaa ylimääräiset sulkeet.
+     *
+     * @param results Ratkaisut.
+     */
+    public static void removeExtraPars(List<String> results) {
+        for (int i = 0; i < results.size(); i++) {
+            results.set(i, removeExtraPars(results.get(i)));
+        }
+    }
+
+    private static String removeExtraPars(String result) {
+        int idx = result.indexOf("{(");
+        while (idx != -1) {
+            int endIdx = calcEndIdxPar(result, 1, idx);
+            if (result.charAt(endIdx + 1) == '}') {
+                result = constructResultNoExtraPars(result, idx, endIdx);
+            }
+
+            idx = result.indexOf("{(", idx + 1);
+        }
+
+        return result;
+    }
+
+    private static String constructResultNoExtraPars(String result, int idx,
+            int endIdx) {
+
+        return result.substring(0, idx + 1)
+                + result.substring(idx + 2, endIdx)
+                + result.substring(endIdx + 1);
+    }
 }

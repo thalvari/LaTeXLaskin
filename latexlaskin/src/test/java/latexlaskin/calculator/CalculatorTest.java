@@ -41,18 +41,21 @@ public class CalculatorTest {
         calc.setDebug(true);
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outStream));
-        String input = "\\int_0^1 2 \\pi x / 2";
+        String input = "cos(x)";
         calc.query(input);
         String out = outStream.toString();
         assertTrue(out.contains("---"));
-        assertTrue(out.contains("http://www.wolframalpha.com/input/?i=%5Cint_0%"
-                + "5E1+2+%5Cpi+x+%2F+2"));
+        assertTrue(out.contains("http://www.wolframalpha.com/input/?i=cos%28x%2"
+                + "9"));
         assertTrue(out.contains("http://api.wolframalpha.com/v2/query?appid="
-                + calc.getAppID() + "&input=%5Cint_0%5E1+2+%5Cpi+x+%2F+2&format"
-                + "=plaintext&async=false&reinterpret=true"));
-        assertTrue(out.contains("π/2"));
-        assertTrue(out.contains("\\frac{π}{2}"));
-        assertTrue(out.contains("\\frac{\\pi}{2}"));
+                + calc.getAppID() + "&input=cos%28x%29&format=plaintext&async=f"
+                + "alse&reinterpret=true"));
+        assertTrue(out.contains("^(- x)/2 + ^( x)/2"));
+        assertTrue(out.contains("\\frac{^(- x)}{2} + \\frac{^( x)}{2}"));
+        assertTrue(out.contains("\\frac{\\mathrm{e}^{(-\\mathrm{i} x)}}{2} + "
+                + "\\frac{\\mathrm{e}^{(\\mathrm{i} x)}}{2}"));
+        assertTrue(out.contains("\\frac{\\mathrm{e}^{-\\mathrm{i} x}}{2} + "
+                + "\\frac{\\mathrm{e}^{\\mathrm{i} x}}{2}"));
     }
 
     @Test
@@ -78,8 +81,8 @@ public class CalculatorTest {
     public void testQuery5() {
         String input = "((x/2)^2 + 1)/(x^2/2 + 2)";
         List<String> results = calc.query(input);
-        assertEquals(results.get(0), "\\frac{x^{2}}{(4 (\\frac{x^{2}}{2} + 2))}"
-                + " + \\frac{1}{(\\frac{x^{2}}{2} + 2)}");
+        assertEquals(results.get(0), "\\frac{x^{2}}{4 (\\frac{x^{2}}{2} + 2)}"
+                + " + \\frac{1}{\\frac{x^{2}}{2} + 2}");
     }
 
     @Test
@@ -88,10 +91,10 @@ public class CalculatorTest {
         List<String> results = calc.query(input);
         assertEquals(results.get(0), "\\frac{1}{2} (\\mathrm{e}^{2} x - 1) ("
                 + "\\tanh(x) - 1)");
-        assertEquals(results.get(1), "-\\frac{(\\mathrm{e}^{2} x - 1)}{("
-                + "\\mathrm{e}^{(2 x)} + 1)}");
-        assertEquals(results.get(2), "\\frac{1}{(\\mathrm{e}^{(2 x)} + 1)} - "
-                + "\\frac{(\\mathrm{e}^{2} x)}{(\\mathrm{e}^{(2 x)} + 1)}");
+        assertEquals(results.get(1), "-\\frac{\\mathrm{e}^{2} x - 1}{"
+                + "\\mathrm{e}^{2 x} + 1}");
+        assertEquals(results.get(2), "\\frac{1}{\\mathrm{e}^{2 x} + 1} - "
+                + "\\frac{\\mathrm{e}^{2} x}{\\mathrm{e}^{2 x} + 1}");
     }
 
     @Test

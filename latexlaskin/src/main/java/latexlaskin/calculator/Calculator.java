@@ -73,6 +73,11 @@ public class Calculator {
             printResults(results);
         }
 
+        LaTeXConverter.removeExtraPars(results);
+        if (debug) {
+            printResults(results);
+        }
+
         return results;
     }
 
