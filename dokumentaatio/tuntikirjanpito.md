@@ -17,5 +17,5 @@ Päivä | Tunnit | Kuvaus
 15.06.2017 | 2h | Lisää dokumentaatiota.
 16.06.2017 | 1h | Refaktorointia.
 27.06.2017 | 1h | Konvertterille uusia ominaisuuksia.
-27.06.2017 | 3h | Viimeisiä muutoksia ja lisää dokumentaatiota.
+28.06.2017 | 3h | Viimeisiä muutoksia ja lisää dokumentaatiota.
 ... | ... | ...
