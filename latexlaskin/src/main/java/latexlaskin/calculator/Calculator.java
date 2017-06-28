@@ -5,7 +5,9 @@
  */
 package latexlaskin.calculator;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import latexlaskin.calculator.latexconverter.LaTeXConverter;
 import latexlaskin.calculator.wa.WACalculator;
 import latexlaskin.calculator.wa.WAResultProcesser;
@@ -17,8 +19,27 @@ import latexlaskin.calculator.wa.WAResultProcesser;
  */
 public class Calculator {
 
+    /**
+     * Varsinainen laskin-olio.
+     */
     private final WACalculator waCalc;
+
+    /**
+     * Kertoo onko debug-tila täytössä.
+     */
     private boolean debug;
+
+    /**
+     * Korvattavat symbolit syötteessä.
+     */
+    private static final Map<String, String> INPUT_SYMBOLS;
+
+    static {
+        INPUT_SYMBOLS = new HashMap();
+        INPUT_SYMBOLS.put("\\mathrm{d}", "d");
+        INPUT_SYMBOLS.put("\\mathrm{e}", "e");
+        INPUT_SYMBOLS.put("\\mathrm{i}", "i");
+    }
 
     /**
      * Konstruktori.
@@ -38,6 +59,7 @@ public class Calculator {
      * @return Ratkaisut.
      */
     public List<String> query(String input) {
+        input = processInput(input);
         List<String> results = waCalc.query(input);
         if (debug) {
             printURLs();
@@ -47,18 +69,39 @@ public class Calculator {
             return null;
         }
 
-        results = process(results);
-        results = convert(results);
+        results = processResults(results);
+        results = convertResults(results);
         return results;
     }
 
-    private List<String> process(List<String> results) {
+    private String processInput(String input) {
+        for (String key : INPUT_SYMBOLS.keySet()) {
+            input = replaceInputSymbol(input, key);
+        }
+
+        return input;
+    }
+
+    private String replaceInputSymbol(String input, String key) {
+        int idx = input.indexOf(key);
+        while (idx != -1) {
+            input = input.substring(0, idx)
+                    + INPUT_SYMBOLS.get(key)
+                    + input.substring(idx + key.length());
+
+            idx = input.indexOf(key);
+        }
+
+        return input;
+    }
+
+    private List<String> processResults(List<String> results) {
         results = WAResultProcesser.removeBadResults(results);
         WAResultProcesser.trimResults(results);
         return results;
     }
 
-    private List<String> convert(List<String> results) {
+    private List<String> convertResults(List<String> results) {
         if (debug) {
             printResults(results);
         }

@@ -25,7 +25,7 @@ public class WACalculatorTest {
     }
 
     @Test
-    public void testQuery() {
+    public void testQueryBadAppID() {
         waCalc.setAppID(waCalc.getAppID() + "1");
         String input = "1+1";
         List<String> results = waCalc.query(input);
@@ -34,7 +34,7 @@ public class WACalculatorTest {
     }
 
     @Test
-    public void testQuery2() {
+    public void testQueryBadInput() {
         String input = "@@";
         List<String> results = waCalc.query(input);
         assertNull(results);
@@ -42,7 +42,7 @@ public class WACalculatorTest {
     }
 
     @Test
-    public void testQuery3() {
+    public void testQueryEmptyInput() {
         String input = "";
         List<String> results = waCalc.query(input);
         assertNull(results);
@@ -50,7 +50,7 @@ public class WACalculatorTest {
     }
 
     @Test
-    public void testQuery4() {
+    public void testQueryNotSupported() {
         String input = "1";
         List<String> results = waCalc.query(input);
         assertNull(results);
@@ -58,7 +58,7 @@ public class WACalculatorTest {
     }
 
     @Test
-    public void testQuery5() {
+    public void testQueryNetworkError() {
         waCalc.setAppID(" ");
         String input = "1+1";
         List<String> results = waCalc.query(input);
@@ -67,7 +67,7 @@ public class WACalculatorTest {
     }
 
     @Test
-    public void testQuery6() {
+    public void testQuerySupportedPodIds() {
         String input = "\\sum_{i=0}^n i";
         List<String> results = waCalc.query(input);
         assertEquals(results.get(0), "∑_(i=0)^n i1/2 n (n + 1)");
@@ -77,14 +77,14 @@ public class WACalculatorTest {
     }
 
     @Test
-    public void testQuery7() {
+    public void testQuerySupportedFirstPodTitles() {
         String input = "d/dx 2x";
         List<String> results = waCalc.query(input);
         assertEquals(results.get(0), "d/dx(2 x)2");
     }
 
     @Test
-    public void testQuery8() {
+    public void testQuerySupportedExclusivePodTitles() {
         String input = "x^2 - 9 = 0";
         List<String> results = waCalc.query(input);
         assertEquals(results.get(0), "x-3");
@@ -92,7 +92,7 @@ public class WACalculatorTest {
     }
 
     @Test
-    public void testQuery9() {
+    public void testQueryWarnings() {
         String input = "lolcatt";
         List<String> results = waCalc.query(input);
         assertNull(results);

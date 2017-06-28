@@ -24,14 +24,28 @@ import latexlaskin.io.IO;
  */
 public class WACalculator {
 
+    /**
+     * API:n tarjoama laskumoottori.
+     */
     private final WAEngine engine;
+
+    /**
+     * Edellinen virheviesti.
+     */
     private String error;
+
+    /**
+     * Ratkaisujen verkko-osoite.
+     */
     private String resURL;
+
+    /**
+     * Ratkaisujen verkko-osoite XML-tiedostona.
+     */
     private String resXMLURL;
 
     /**
      * Konstruktori.
-     *
      */
     public WACalculator() {
         engine = new WAEngine();
@@ -168,7 +182,7 @@ public class WACalculator {
     /**
      * Palauttaa AppID:n.
      *
-     * @return ApID.
+     * @return AppID.
      */
     public String getAppID() {
         return engine.getAppID();

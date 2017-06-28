@@ -25,7 +25,7 @@ public class WAResultProcesserTest {
     }
 
     @Test
-    public void testTrimResults() {
+    public void testTrimResultsInputApprox() {
         List<String> results = new ArrayList();
         results.add("∫_0^1 2 π xxπ≈3.1416");
         WAResultProcesser.trimResults(results);
@@ -33,7 +33,7 @@ public class WAResultProcesserTest {
     }
 
     @Test
-    public void testTrimResults2() {
+    public void testTrimResultsExtra() {
         List<String> results = new ArrayList();
         results.add("1/2 (4 π n + π),   n∈");
         WAResultProcesser.trimResults(results);
@@ -41,7 +41,7 @@ public class WAResultProcesserTest {
     }
 
     @Test
-    public void testemoveBadResults() {
+    public void testemoveBadResultsFor() {
         List<String> results = new ArrayList();
         results.add("1/2  (for x≠-2  and x≠2 )");
         results = WAResultProcesser.removeBadResults(results);

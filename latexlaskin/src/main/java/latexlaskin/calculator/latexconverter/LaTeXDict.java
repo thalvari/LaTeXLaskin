@@ -16,6 +16,9 @@ import java.util.Set;
  */
 public class LaTeXDict {
 
+    /**
+     * Sanakirjan avaimet ja niitä vastaavat arvot.
+     */
     private static final Map<String, LaTeXDictItem> DICTIONARY;
 
     static {

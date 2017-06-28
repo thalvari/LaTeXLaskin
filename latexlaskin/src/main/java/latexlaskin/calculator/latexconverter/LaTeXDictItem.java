@@ -12,7 +12,14 @@ package latexlaskin.calculator.latexconverter;
  */
 public class LaTeXDictItem {
 
+    /**
+     * LaTeX-vastineen alkuosa.
+     */
     private final String tag;
+
+    /**
+     * LaTeX-vastineen loppuosa.
+     */
     private final String closingTag;
 
     /**

@@ -24,7 +24,7 @@ public class LaTeXConverterTest {
     }
 
     @Test
-    public void testReplaceSlashes() {
+    public void testReplaceSlashesStartEndIdxs() {
         List<String> results = new ArrayList();
         results.add("1/8 (2 n + 1)^2 - 1/8");
         LaTeXConverter.replaceSlashes(results);
@@ -32,7 +32,7 @@ public class LaTeXConverterTest {
     }
 
     @Test
-    public void testReplaceSlashes2() {
+    public void testReplaceSlashesStartEndIdxsPar() {
         List<String> results = new ArrayList();
         results.add("(x^2/4 + 1)/(x^2/2 + 1)");
         LaTeXConverter.replaceSlashes(results);
@@ -41,7 +41,7 @@ public class LaTeXConverterTest {
     }
 
     @Test
-    public void testReplaceSlashes3() {
+    public void testReplaceSlashesCalcEndIdxPar() {
         List<String> results = new ArrayList();
         results.add("x^2/(4 (x^2/2 + 1)) + 1/(x^2/2 + 1)");
         LaTeXConverter.replaceSlashes(results);
@@ -50,7 +50,7 @@ public class LaTeXConverterTest {
     }
 
     @Test
-    public void testReplaceSlashes4() {
+    public void testReplaceSlashesCalcEndIdxPar2() {
         List<String> results = new ArrayList();
         results.add("(4 (x^2/4 + 2))/(x^2/2 + 1)");
         LaTeXConverter.replaceSlashes(results);
@@ -59,7 +59,7 @@ public class LaTeXConverterTest {
     }
 
     @Test
-    public void testReplaceSlashes5() {
+    public void testReplaceSlashesExpInPar() {
         List<String> results = new ArrayList();
         results.add("^(- x)/2 + ^( x)/2");
         LaTeXConverter.replaceSlashes(results);
@@ -68,7 +68,7 @@ public class LaTeXConverterTest {
     }
 
     @Test
-    public void testReplaceSlashes6() {
+    public void testReplaceSlashesExpInPar2() {
         List<String> results = new ArrayList();
         results.add("^(-(x - μ)^2/(2 σ^2))/(sqrt(2 π) σ)");
         LaTeXConverter.replaceSlashes(results);
@@ -77,7 +77,7 @@ public class LaTeXConverterTest {
     }
 
     @Test
-    public void testReplaceSlashes7() {
+    public void testReplaceSlashesNoParFunc() {
         List<String> results = new ArrayList();
         results.add("^(-x^2/2)/sqrt(2 π)");
         LaTeXConverter.replaceSlashes(results);
@@ -85,7 +85,7 @@ public class LaTeXConverterTest {
     }
 
     @Test
-    public void testReplace() {
+    public void testReplaceSymbol() {
         List<String> results = new ArrayList();
         results.add("^2");
         LaTeXConverter.replace(results);
@@ -93,7 +93,7 @@ public class LaTeXConverterTest {
     }
 
     @Test
-    public void testReplace2() {
+    public void testReplaceFunctions() {
         List<String> results = new ArrayList();
         results.add("sin(a) cos(b) + cos(a) sin(b)");
         LaTeXConverter.replace(results);
@@ -101,7 +101,7 @@ public class LaTeXConverterTest {
     }
 
     @Test
-    public void testReplace3() {
+    public void testReplaceTwoPartFunction() {
         List<String> results = new ArrayList();
         results.add("2 abs(x - 1)");
         LaTeXConverter.replace(results);
@@ -109,7 +109,7 @@ public class LaTeXConverterTest {
     }
 
     @Test
-    public void testReplace4() {
+    public void testReplaceTwoPartFunction2() {
         List<String> results = new ArrayList();
         results.add("sqrt((2 x - 2)^2)");
         LaTeXConverter.replace(results);
@@ -117,7 +117,7 @@ public class LaTeXConverterTest {
     }
 
     @Test
-    public void testReplace5() {
+    public void testReplaceExp() {
         List<String> results = new ArrayList();
         results.add(" ^(- x) -  ^( x)");
         LaTeXConverter.replace(results);
@@ -126,7 +126,7 @@ public class LaTeXConverterTest {
     }
 
     @Test
-    public void testReplace6() {
+    public void testReplaceFuncExp() {
         List<String> results = new ArrayList();
         results.add("\\frac{1}{2} (π - 2 sin^(-1)(x))");
         LaTeXConverter.replace(results);
@@ -134,7 +134,7 @@ public class LaTeXConverterTest {
     }
 
     @Test
-    public void testReplace7() {
+    public void testReplaceFuncExp2() {
         List<String> results = new ArrayList();
         results.add("sin^2(x)");
         LaTeXConverter.replace(results);

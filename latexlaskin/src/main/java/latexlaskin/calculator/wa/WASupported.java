@@ -16,8 +16,20 @@ import java.util.Set;
  */
 public class WASupported {
 
+    /**
+     * Podi on tuettu, jos sen id löytyy tästä joukosta.
+     */
     private static final Set<String> SUPPORTED_POD_IDS;
+
+    /**
+     * Jos podin otsikko löytyy tästä joukosta, se on ainoa tuettu ratkaisu.
+     */
     private static final Set<String> SUPPORTED_EXCLUSIVE_POD_TITLES;
+
+    /**
+     * Podi on tuettu, jos sen otsikko löytyy tästä joukosta ja se sijaitsee
+     * ensimmäisenä.
+     */
     private static final Set<String> SUPPORTED_FIRST_POD_TITLES;
 
     static {

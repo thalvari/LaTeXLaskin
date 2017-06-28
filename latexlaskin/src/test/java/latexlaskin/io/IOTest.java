@@ -44,7 +44,7 @@ public class IOTest {
     }
 
     @Test
-    public void testRead2() {
+    public void testReadEmpty() {
         assertNull(IO.readAppID(file));
     }
 }

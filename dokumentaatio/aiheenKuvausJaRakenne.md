@@ -13,6 +13,8 @@ Kuka tahansa. Pitää olla Wolframin AppID.
 - AppID:n vaihtaminen omassa näkymässään.
 # Luokkakaavio
 ![Luokkakaavio](luokkakaavio.png)
+# Rakennekuvaus
+Ohjelma on jaettu viiteen pakkaukseen. IO-pakkaus sisältää APPID:n sisältävän tiedoston käsittelemiseen vaaditun toiminnallisuuden. GUI-pakkaus sisältää käyttöliittymän. WA-pakkaus sisältää API:a hyödyntävän toiminnallisuuden, jolla tuetut ratkaisut saadaan talteen. Latexconverter-pakkaus sisältää toiminnallisuuden ratkaisujen kääntämiseen. Calculator-pakkaus hyödyntää WA- ja Latexconverter-pakkauksia ja tarjoaa GUI:lle käännetyt ratkaisut.
 # Käyttötapauksia
 ![Käyttötapaus 1](sekvenssikaavio_1.png)
 ![Käyttötapaus 2](sekvenssikaavio_2.png)

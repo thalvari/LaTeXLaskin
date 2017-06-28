@@ -29,7 +29,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testQuery() {
+    public void testQueryEmptyInput() {
         String input = "";
         List<String> results = calc.query(input);
         assertNull(results);
@@ -37,7 +37,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testQuery2() {
+    public void testQueryPrintDebug() {
         calc.setDebug(true);
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outStream));
@@ -59,7 +59,14 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testQuery3() {
+    public void testQueryProcessInput() {
+        String input = "\\mathrm{e}^{\\mathrm{i} x}";
+        List<String> results = calc.query(input);
+        assertEquals(results.get(0), "\\cos(x) + \\mathrm{i} \\sin(x)");
+    }
+
+    @Test
+    public void testQueryRegression() {
         String input = "\\sum_{i=0}^n i";
         List<String> results = calc.query(input);
         assertEquals(results.get(0), "\\frac{1}{2} n (n + 1)");
@@ -71,14 +78,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testQuery4() {
-        String input = "e^{ix}";
-        List<String> results = calc.query(input);
-        assertEquals(results.get(0), "\\cos(x) + \\mathrm{i} \\sin(x)");
-    }
-
-    @Test
-    public void testQuery5() {
+    public void testQueryRegression2() {
         String input = "((x/2)^2 + 1)/(x^2/2 + 2)";
         List<String> results = calc.query(input);
         assertEquals(results.get(0), "\\frac{x^{2}}{4 (\\frac{x^{2}}{2} + 2)}"
@@ -86,7 +86,7 @@ public class CalculatorTest {
     }
 
     @Test
-    public void testQuery6() {
+    public void testQueryRegression3() {
         String input = "(1-e^2x)/(1+e^{2x})";
         List<String> results = calc.query(input);
         assertEquals(results.get(0), "\\frac{1}{2} (\\mathrm{e}^{2} x - 1) ("

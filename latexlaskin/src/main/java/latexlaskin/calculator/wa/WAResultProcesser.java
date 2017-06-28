@@ -17,7 +17,14 @@ import java.util.Set;
  */
 public class WAResultProcesser {
 
+    /**
+     * Joukko merkeistä, joita edeltävä osa leikataan ratkaisusta.
+     */
     private static final Set<String> TRIM_START;
+
+    /**
+     * Joukko merkeistä, joita seuraava osa leikataan ratkaisusta.
+     */
     private static final Set<String> TRIM_END;
 
     static {
